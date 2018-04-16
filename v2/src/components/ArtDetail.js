@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 
-import img from '../assets/mona.jpg';
-
-
 class ArtDetail extends Component {
 
   constructor(props) {
@@ -12,7 +9,7 @@ class ArtDetail extends Component {
   render() {
     let {name, description, img} = this.props;
     return (
-      <div className="modal fade bd-example-modal-lg" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div className="modal fade art-detail-modal" tabIndex="-1" role="dialog" aria-labelledby="artDetail" aria-hidden="true">
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-header">
@@ -62,8 +59,6 @@ class ArtDetail extends Component {
                       </div>
                     </div>
                   </div>
-
-
 
                 </div>
               </div>

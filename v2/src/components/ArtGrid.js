@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import ArtCard from './ArtCard.js';
 import ArtDetail from './ArtDetail.js';
+import NewArtwork from './NewArtwork.js';
 
 class ArtGrid extends Component {
 
@@ -59,6 +60,7 @@ class ArtGrid extends Component {
             { this.state.art.map((art, i) => <ArtCard handleClick={this.handleSelectArtwork.bind(this)} id={i} {...art} key={i} />) }
           </div>
           <ArtDetail {...this.state.selectedArtwork}/>
+          <NewArtwork />
         </div>
       </div>
 

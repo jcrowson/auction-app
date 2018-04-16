@@ -10,6 +10,7 @@ class Navbar extends Component {
         </a>
         <form className="form-inline">
           <div className="btn-toolbar">
+            <button className="btn btn-primary mr-sm-2" type="button" data-toggle="modal" data-target=".new-artwork-modal">Submit Artwork for Auction</button>
             <button className="btn btn-primary mr-sm-2" type="button">Login</button>
             <button className="btn btn-outline-primary" type="button">Create Account</button>
           </div>
