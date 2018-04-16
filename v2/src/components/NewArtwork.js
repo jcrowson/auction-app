@@ -22,14 +22,14 @@ class NewArtwork extends Component {
 
                 <div className="row">
                   <div className="col-md-6 mb-3">
-                    <label for="firstName">Artwork Name</label>
+                    <label htmlFor="firstName">Artwork Name</label>
                     <input type="text" className="form-control" id="firstName" placeholder="" value="" required />
                     <div className="invalid-feedback">
                       Valid first name is required.
                     </div>
                   </div>
                   <div className="col-md-6 mb-3">
-                    <label for="lastName">Serial Number</label>
+                    <label htmlFor="lastName">Serial Number</label>
                     <input type="text" className="form-control" id="lastName" placeholder="" value="" required />
                     <div className="invalid-feedback">
                       Valid last name is required.
@@ -39,21 +39,21 @@ class NewArtwork extends Component {
 
                 <div className="mb-3">
                   <div className="form-group">
-                    <label for="exampleFormControlTextarea1">Description</label>
+                    <label htmlFor="exampleFormControlTextarea1">Description</label>
                     <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                   </div>
                 </div>
 
                 <div className="row">
                   <div className="col-md-6 mb-3">
-                    <label for="firstName">Creation Date</label>
+                    <label htmlFor="firstName">Creation Date</label>
                     <input type="text" className="form-control" id="firstName" placeholder="" value="" required />
                     <div className="invalid-feedback">
                       Valid first name is required.
                     </div>
                   </div>
                   <div className="col-md-6 mb-3">
-                    <label for="country">Type</label>
+                    <label htmlFor="country">Type</label>
                     <select className="custom-select d-block w-100" id="country" required>
                       <option value="">Choose...</option>
                       <option>Classical</option>
@@ -66,7 +66,7 @@ class NewArtwork extends Component {
 
                 <div className="row">
                   <div className="col-md-6 mb-3">
-                    <label for="country">Subject Area</label>
+                    <label htmlFor="country">Subject Area</label>
                     <select className="custom-select d-block w-100" id="country" required>
                       <option value="">Choose...</option>
                       <option>Portrait</option>
@@ -76,7 +76,7 @@ class NewArtwork extends Component {
                     </div>
                   </div>
                   <div className="col-md-6 mb-3">
-                    <label for="country">Media</label>
+                    <label htmlFor="country">Media</label>
                     <select className="custom-select d-block w-100" id="country" required>
                       <option value="">Choose...</option>
                       <option>Oil</option>
@@ -88,7 +88,7 @@ class NewArtwork extends Component {
                 </div>
 
                 <div className="mb-3">
-                  <label for="country">Auction House</label>
+                  <label htmlFor="country">Auction House</label>
                   <select className="custom-select d-block w-100" id="country" required>
                     <option value="">Choose...</option>
                     <option>Auction House 1</option>
@@ -99,7 +99,7 @@ class NewArtwork extends Component {
                 </div>
 
                 <div className="mb-3">
-                  <label for="username">Buy-It-Now Price</label>
+                  <label htmlFor="username">Buy-It-Now Price</label>
                   <div className="input-group">
                     <div className="input-group-prepend">
                       <span className="input-group-text">$</span>
@@ -112,7 +112,7 @@ class NewArtwork extends Component {
                 </div>
 
                 <div className="mb-3">
-                  <label for="username">Reserve Price</label>
+                  <label htmlFor="username">Reserve Price</label>
                   <div className="input-group">
                     <div className="input-group-prepend">
                       <span className="input-group-text">$</span>
@@ -126,12 +126,12 @@ class NewArtwork extends Component {
 
                 <div className="mb-3">
                   <div className="form-group">
-                    <label for="exampleFormControlFile1">Upload Photo of Artwork</label>
+                    <label htmlFor="exampleFormControlFile1">Upload Photo of Artwork</label>
                     <input type="file" className="form-control-file" id="exampleFormControlFile1" />
                   </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Submit to Auction</button>
+                <button type="submit" className="btn btn-primary">Submit to Auction</button>
 
               </div>
             </div>

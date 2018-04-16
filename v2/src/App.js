@@ -11,8 +11,14 @@ class App extends Component {
     super(props);
     this.state = {
       isLoggedIn: true,
-      isAuctionHouse: true,
+      isAuctionHouse: false,
     }
+  }
+
+  handleViewChange(val) {
+    this.setState({
+      isAuctionHouse: val,
+    })
   }
 
   renderContent() {
@@ -24,16 +30,16 @@ class App extends Component {
     if (isAuctionHouse) {
       return (
         <div>
-          <Navbar />
+          <Navbar handleViewChange={this.handleViewChange.bind(this)} {...this.state} />
           <ManageArtworks />
           <Footer />
         </div>
       );
     }
-    if (!isAuctionHouse) {
+    else {
       return (
         <div>
-          <Navbar />
+          <Navbar handleViewChange={this.handleViewChange.bind(this)} {...this.state} />
           <ArtGrid />
           <Footer />
         </div>

@@ -53,18 +53,16 @@ class ArtGrid extends Component {
   render() {
     return (
       <main role="main">
-
-      <div className="album py-5 bg-light">
-        <div className="container">
-          <div className="row">
-            { this.state.art.map((art, i) => <ArtCard handleClick={this.handleSelectArtwork.bind(this)} id={i} {...art} key={i} />) }
+        <div className="py-5 bg-light">
+          <div className="container">
+            <div className="row">
+              { this.state.art.map((art, i) => <ArtCard handleClick={this.handleSelectArtwork.bind(this)} id={i} {...art} key={i} />) }
+            </div>
+            <ArtDetail {...this.state.selectedArtwork}/>
+            <NewArtwork />
           </div>
-          <ArtDetail {...this.state.selectedArtwork}/>
-          <NewArtwork />
         </div>
-      </div>
-
-    </main>
+      </main>
     );
   }
 
