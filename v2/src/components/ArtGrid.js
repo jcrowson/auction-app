@@ -8,6 +8,11 @@ class ArtGrid extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      selectedArtwork: {
+        name: 'Mona Lisa',
+        description: 'The Mona Lisa is a half-length portrait painting by the Italian Renaissance artist Leonardo da Vinci that has been described as "the best known, the most visited, the most written about, the most sung.',
+        img: 'mona.jpg',
+      },
       art: [{
         name: 'Mona Lisa',
         description: 'The Mona Lisa is a half-length portrait painting by the Italian Renaissance artist Leonardo da Vinci that has been described as "the best known, the most visited, the most written about, the most sung.',
@@ -40,19 +45,20 @@ class ArtGrid extends Component {
 
   }
 
+  handleSelectArtwork(val) {
+    this.setState({ selectedArtwork: this.state.art[val] });
+  }
+
   render() {
     return (
       <main role="main">
 
       <div className="album py-5 bg-light">
         <div className="container">
-
           <div className="row">
-
-            { this.state.art.map((art, i) => <ArtCard {...art} key={i} />) }
-
+            { this.state.art.map((art, i) => <ArtCard handleClick={this.handleSelectArtwork.bind(this)} id={i} {...art} key={i} />) }
           </div>
-          <ArtDetail />
+          <ArtDetail {...this.state.selectedArtwork}/>
         </div>
       </div>
 

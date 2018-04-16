@@ -4,7 +4,7 @@ import logo from '../assets/logo.svg';
 class Navbar extends Component {
   render() {
     return (
-      <nav className="navbar navbar-light bg-light">
+      <nav className="navbar navbar-light">
         <a className="navbar-brand" href="#">
           <img src={logo} width="146" height="40" alt="" />
         </a>
