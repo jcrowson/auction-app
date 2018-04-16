@@ -21,3 +21,14 @@ footer p {
   padding-top: 20px;
   padding-bottom: 20px;
 }
+
+.login-form {
+  padding-top: 10rem;
+}
+
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
