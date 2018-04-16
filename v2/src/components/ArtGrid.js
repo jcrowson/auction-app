@@ -1,74 +1,65 @@
 import React, { Component } from 'react';
 
-import starry from '../assets/starry.jpg';
-import wave from '../assets/wave.jpg';
-import mona from '../assets/mona.jpg';
+import ArtCard from './ArtCard.js';
+import ArtDetail from './ArtDetail.js';
 
 class ArtGrid extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      art: [{
+        name: 'Mona Lisa',
+        description: 'The Mona Lisa is a half-length portrait painting by the Italian Renaissance artist Leonardo da Vinci that has been described as "the best known, the most visited, the most written about, the most sung.',
+        img: 'mona.jpg',
+      }, {
+        name: 'Starry Night',
+        description: 'The Starry Night is an oil on canvas by the Dutch post-impressionist painter Vincent van Gogh. Painted in June 1889, it depicts the view from the east-facing window of his asylum room at Saint-Rémy-de-Provence',
+        img: 'starry.jpg',
+      }, {
+        name: 'The Great Wave off Kanagawa',
+        description: 'The Great Wave off Kanagawa, also known as The Great Wave or simply The Wave, is a woodblock print by the Japanese ukiyo-e artist Hokusai.',
+        img: 'wave.jpg',
+      }, {
+        name: 'Water Lilies',
+        description: 'Water Lilies is a series of approximately 250 oil paintings by French Impressionist Claude Monet. The paintings depict his flower garden at his home in Giverny, and were the main focus of his artistic.',
+        img: 'lilies.jpg',
+      }, {
+        name: 'Jacqueline with flowers',
+        description: 'Jacqueline with Flowers, 1954 celebrates the entry of Picassos new companion, Jacqueline Roque, into his painting. Antonina Vallentin calls the figure a modern sphinx, and it is true that in this crouching position.',
+        img: 'flowers.jpg',
+      }, {
+        name: 'The Son of Man',
+        description: 'The Son of Man is a 1964 painting by the Belgian surrealist painter René Magritte. It is perhaps his most well-known artwork. Magritte painted it as a self-portrait.',
+        img: 'son-of-man.jpg',
+      }],
+    }
+  }
+
+  componentDidMount() {
+
+  }
+
   render() {
     return (
       <main role="main">
 
-      <div class="album py-5 bg-light">
-        <div class="container">
+      <div className="album py-5 bg-light">
+        <div className="container">
 
-          <div class="row">
+          <div className="row">
 
-            <div class="col-md-4">
-              <div class="card mb-4 box-shadow">
-                <img class="card-img-top" src={starry} alt="Card image cap" />
-                <div class="card-body">
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                    </div>
-                    <small class="text-muted">9 mins</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="card mb-4 box-shadow">
-                <img class="card-img-top" src={wave} alt="Card image cap" />
-                <div class="card-body">
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                    </div>
-                    <small class="text-muted">12 mins</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="card mb-4 box-shadow">
-                <img class="card-img-top" src={mona} alt="Card image cap" />
-                <div class="card-body">
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                    </div>
-                    <small class="text-muted">14 mins</small>
-                  </div>
-                </div>
-              </div>
-            </div>
+            { this.state.art.map((art, i) => <ArtCard {...art} key={i} />) }
 
           </div>
+          <ArtDetail />
         </div>
       </div>
 
     </main>
     );
   }
+
 }
 
 export default ArtGrid;
