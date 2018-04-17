@@ -23,12 +23,12 @@ class OpenAuction extends Component {
                 <div className="row">
                   <div className="col-md-12">
                     <form>
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">Duration</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required="Enter email" />
-                        <small id="emailHelp" class="form-text text-muted">Enter the auction duration in minutes.</small>
+                      <div className="form-group">
+                        <label htmlFor="exampleInputEmail1">Duration</label>
+                        <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required="Enter email" />
+                        <small id="emailHelp" className="form-text text-muted">Enter the auction duration in minutes.</small>
                       </div>
-                      <button type="submit" class="btn btn-primary btn-block">Begin Auction</button>
+                      <button type="submit" className="btn btn-primary btn-block">Begin Auction</button>
                     </form>
                   </div>
                 </div>

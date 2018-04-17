@@ -8,6 +8,7 @@ class ArtGrid extends Component {
 
   constructor(props) {
     super(props);
+    this.handleSelectArtwork = this.handleSelectArtwork.bind(this);
     this.state = {
       selectedArtwork: {
         name: 'Mona Lisa',
@@ -56,7 +57,7 @@ class ArtGrid extends Component {
         <div className="py-5 bg-light">
           <div className="container">
             <div className="row">
-              { this.state.art.map((art, i) => <ArtCard handleClick={this.handleSelectArtwork.bind(this)} id={i} {...art} key={i} />) }
+              { this.state.art.map((art, i) => <ArtCard handleClick={this.handleSelectArtwork} id={i} {...art} key={i} />) }
             </div>
             <ArtDetail {...this.state.selectedArtwork}/>
             <NewArtwork />

@@ -9,23 +9,30 @@ class App extends Component {
 
   constructor(props) {
     super(props);
+    this.handleLogin = this.handleLogin.bind(this);
     this.state = {
-      isLoggedIn: true,
+      isLoggedIn: false,
       isAuctionHouse: false,
-    }
+    };
+  }
+
+  handleLogin() {
+    this.setState({
+      isLoggedIn: true,
+    })
   }
 
   handleViewChange(val) {
     this.setState({
       isAuctionHouse: val,
-    })
+    });
   }
 
   renderContent() {
     const isLoggedIn = this.state.isLoggedIn;
     const isAuctionHouse = this.state.isAuctionHouse;
     if (!isLoggedIn) {
-      return <Login />;
+      return <Login handleLogin={this.handleLogin} />;
     }
     if (isAuctionHouse) {
       return (
