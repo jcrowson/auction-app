@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class ArtDetail extends Component {
+class ArtworkDetail extends Component {
 
   constructor(props) {
     super(props);
@@ -43,15 +43,15 @@ class ArtDetail extends Component {
                   <div className="col-md-12">
                     <div className="jumbotron jumbotron-fluid">
                       <div className="container">
-                        <p>Current bid price: $1,000,000</p>
+                        <p><small>Current bid: </small><strong>$1,000,000</strong></p>
                         <form>
                           <div className="form-group">
-                            <label htmlFor="exampleInputEmail1">Make a Bid</label>
+                            <label htmlFor="exampleInputEmail1">Enter $1,000,001 or more</label>
                             <div className="input-group">
                               <div className="input-group-prepend">
                                 <div className="input-group-text">$</div>
                               </div>
-                              <input type="text" className="form-control" id="inlineFormInputGroupUsername" placeholder="Bid Amount" />
+                              <input type="number" className="form-control" id="inlineFormInputGroupUsername" placeholder="Bid Amount" />
                             </div>
                           </div>
                           <button type="submit" className="btn btn-primary">Place Bid</button>
@@ -70,4 +70,4 @@ class ArtDetail extends Component {
   }
 }
 
-export default ArtDetail;
+export default ArtworkDetail;

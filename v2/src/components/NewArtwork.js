@@ -12,7 +12,7 @@ class NewArtwork extends Component {
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLongTitle">Submit Artwork for Auction</h5>
+              <h5 className="modal-title" id="exampleModalLongTitle">Add Artwork to Blockchain</h5>
               <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -88,50 +88,13 @@ class NewArtwork extends Component {
                 </div>
 
                 <div className="mb-3">
-                  <label htmlFor="country">Auction House</label>
-                  <select className="custom-select d-block w-100" id="country" required>
-                    <option value="">Choose...</option>
-                    <option>Auction House 1</option>
-                  </select>
-                  <div className="invalid-feedback">
-                    Please select a valid country.
-                  </div>
-                </div>
-
-                <div className="mb-3">
-                  <label htmlFor="username">Buy-It-Now Price</label>
-                  <div className="input-group">
-                    <div className="input-group-prepend">
-                      <span className="input-group-text">$</span>
-                    </div>
-                    <input type="text" className="form-control" id="username" placeholder="Dollars" required />
-                    <div className="invalid-feedback">
-                      Your username is required.
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mb-3">
-                  <label htmlFor="username">Reserve Price</label>
-                  <div className="input-group">
-                    <div className="input-group-prepend">
-                      <span className="input-group-text">$</span>
-                    </div>
-                    <input type="text" className="form-control" id="username" placeholder="Dollars" required />
-                    <div className="invalid-feedback">
-                      Your username is required.
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mb-3">
                   <div className="form-group">
                     <label htmlFor="exampleFormControlFile1">Upload Photo of Artwork</label>
                     <input type="file" className="form-control-file" id="exampleFormControlFile1" />
                   </div>
                 </div>
 
-                <button type="submit" className="btn btn-primary">Submit to Auction</button>
+                <button type="submit" className="btn btn-primary">Save and Add Artwork</button>
 
               </div>
             </div>

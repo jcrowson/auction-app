@@ -16,7 +16,7 @@ class Navbar extends Component {
     }
     if (!isAuctionHouse) {
       return (
-        <button className="btn btn-primary mr-sm-2" type="button" data-toggle="modal" data-target=".new-artwork-modal">Submit Artwork for Auction</button>
+        <button className="btn btn-primary mr-sm-2" type="button" data-toggle="modal" data-target=".new-artwork-modal">Add Artwork to Blockchain</button>
       );
     }
   }

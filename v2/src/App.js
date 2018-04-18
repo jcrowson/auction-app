@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Login from './components/Login.js';
 import Navbar from './components/Navbar.js';
-import ArtGrid from './components/ArtGrid.js';
+import ArtworkGrid from './components/ArtworkGrid.js';
 import ManageArtworks from './components/ManageArtworks.js';
 import Footer from './components/Footer.js';
 
@@ -11,7 +11,7 @@ class App extends Component {
     super(props);
     this.handleLogin = this.handleLogin.bind(this);
     this.state = {
-      isLoggedIn: false,
+      isLoggedIn: true,
       isAuctionHouse: false,
     };
   }
@@ -47,7 +47,7 @@ class App extends Component {
       return (
         <div>
           <Navbar handleViewChange={this.handleViewChange.bind(this)} {...this.state} />
-          <ArtGrid />
+          <ArtworkGrid />
           <Footer />
         </div>
       );
