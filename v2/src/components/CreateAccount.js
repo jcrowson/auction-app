@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import logo from '../assets/logo.svg';
 
 import Spinner from './Spinner.js';
-import Users from '../services/api/Users.js';
+
+import UsersAPI from '../services/api/Users.js';
 
 class CreateAccount extends Component {
 
@@ -12,7 +13,7 @@ class CreateAccount extends Component {
       isLoading: false,
     };
 
-    this.usersAPI = new Users();
+    this.usersAPI = new UsersAPI();
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -36,10 +37,10 @@ class CreateAccount extends Component {
         userType: "TRD",
         timeStamp: new Date(),
       },
-      isLoading: true
+      isLoading: true,
     }, () => {
       let user = { user: this.state.user };
-      this.usersAPI.CreateNewUser(user).then((res) => {
+      this.usersAPI.createNewUser(user).then((res) => {
         this.setState({ isLoading: false });
         this.props.handleViewChange();
       });
