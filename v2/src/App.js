@@ -11,7 +11,7 @@ class App extends Component {
     super(props);
     this.handleLogin = this.handleLogin.bind(this);
     this.state = {
-      isLoggedIn: true,
+      isLoggedIn: false,
       isAuctionHouse: false,
     };
   }

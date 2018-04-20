@@ -6,8 +6,10 @@ class ArtworkCard extends Component {
 
   constructor(props) {
     super(props);
-    let openTime = moment();
-    let endTime = moment().add(Math.floor(Math.random() * 10) + 2, 'minutes');
+
+    let aucStartDateTime = '2018-04-20 10:18:00';
+    let openTime = moment(aucStartDateTime, 'YYYY-MM-DD HH:mm:ss');
+    let endTime = moment(aucStartDateTime, 'YYYY-MM-DD HH:mm:ss').add(5, 'minutes');
     this.state = {
       openTime: openTime,
       endTime: endTime,
@@ -18,7 +20,7 @@ class ArtworkCard extends Component {
   countDownAuction() {
     let duration = moment.duration(this.state.endTime.diff(moment()));
     this.setState({
-      timeLeft: `${duration.minutes()}:${duration.seconds()}`,
+      timeLeft: `${moment(duration._data).format('mm')}:${moment(duration._data).format('ss')}`,
     });
   }
 

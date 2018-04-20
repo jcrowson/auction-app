@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import logo from '../assets/logo.svg';
+import fabricLogo from '../assets/fabric-logo.png';
 
 class Navbar extends Component {
 
@@ -30,6 +31,7 @@ class Navbar extends Component {
       <nav className="navbar navbar-light">
         <a className="navbar-brand" href="#">
           <img src={logo} width="146" height="40" alt="" />
+          <img src={fabricLogo} alt="" width="200" />
         </a>
         <form className="form-inline">
           <div className="btn-toolbar">

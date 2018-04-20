@@ -21,18 +21,11 @@ class NewArtwork extends Component {
               <div className="container-fluid">
 
                 <div className="row">
-                  <div className="col-md-6 mb-3">
+                  <div className="col-md-12 mb-3">
                     <label htmlFor="firstName">Artwork Name</label>
                     <input type="text" className="form-control" id="firstName" placeholder="" value="" required />
                     <div className="invalid-feedback">
                       Valid first name is required.
-                    </div>
-                  </div>
-                  <div className="col-md-6 mb-3">
-                    <label htmlFor="lastName">Serial Number</label>
-                    <input type="text" className="form-control" id="lastName" placeholder="" value="" required />
-                    <div className="invalid-feedback">
-                      Valid last name is required.
                     </div>
                   </div>
                 </div>
@@ -83,6 +76,28 @@ class NewArtwork extends Component {
                     </select>
                     <div className="invalid-feedback">
                       Please select a valid country.
+                    </div>
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-md-6 mb-3">
+                    <label htmlFor="size">Size (e.g. 24 x 24)</label>
+                    <input type="text" className="form-control" id="lastName" placeholder="" value="" required />
+                    <div className="invalid-feedback">
+                      Valid last name is required.
+                    </div>
+                  </div>
+                  <div className="col-md-6 mb-3">
+                    <label htmlFor="size">Base Price</label>
+                    <div className="input-group">
+                      <div className="input-group-prepend">
+                        <span className="input-group-text">$</span>
+                      </div>
+                      <input type="number" className="form-control" id="username" placeholder="Dollars" required />
+                      <div className="invalid-feedback">
+                        Your username is required.
+                      </div>
                     </div>
                   </div>
                 </div>
