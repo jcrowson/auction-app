@@ -5,8 +5,6 @@ import ArtworkDetail from './ArtworkDetail.js';
 import NewArtwork from './NewArtwork.js';
 import SubmitArtworkAuction from './SubmitArtworkAuction.js';
 
-import Users from '../services/api/Users.js';
-
 class ArtworkGrid extends Component {
 
   constructor(props) {
@@ -48,14 +46,11 @@ class ArtworkGrid extends Component {
   }
 
   componentDidMount() {
-    this.usersAPI = new Users();
+    
   }
 
   handleSelectArtwork(artworkIndex) {
     this.setState({ selectedArtwork: this.state.art[artworkIndex] });
-    this.usersAPI.Login().then(function (val) {
-      console.log(val.page);
-    });
   }
 
   render() {

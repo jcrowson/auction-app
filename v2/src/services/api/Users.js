@@ -1,9 +1,19 @@
-const API_ENDPOINT = 'https://hn.algolia.com/api/v1/search?query=';
+const API_ENDPOINT = 'https://postman-echo.com/';
+const GET_REQUEST_OPTIONS = {
+  headers: new Headers({'content-type': 'application/json'}),
+  'method': 'GET',
+};
+const POST_REQUEST_OPTIONS = {
+  headers: new Headers({'content-type': 'application/json'}),
+  'method': 'POST',
+};
 
 export default class Users {
-  Login() {
+
+  CreateNewUser(user) {
     return new Promise(function (resolve, reject) {
-      fetch(API_ENDPOINT + 'james')
+      POST_REQUEST_OPTIONS.body = JSON.stringify(user);
+      fetch(API_ENDPOINT + 'post', POST_REQUEST_OPTIONS)
       .then(response => response.json())
       .then(data => resolve(data));
     });

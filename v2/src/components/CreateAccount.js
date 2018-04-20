@@ -1,89 +1,105 @@
 import React, { Component } from 'react';
-
 import logo from '../assets/logo.svg';
+
+import Spinner from './Spinner.js';
+import Users from '../services/api/Users.js';
 
 class CreateAccount extends Component {
 
-  render() {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: false,
+    };
 
+    this.usersAPI = new Users();
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+    let user = {...this.state.user}
+    user[name] = value;
+    this.setState({user});
+  }
+
+  handleSubmit(event) {
+    this.setState({
+      user: {
+        ...this.state.user,
+        userId: 100,
+        docType: "USER",
+        userType: "TRD",
+        timeStamp: new Date(),
+      },
+      isLoading: true
+    }, () => {
+      let user = { user: this.state.user };
+      this.usersAPI.CreateNewUser(user).then((res) => {
+        this.setState({ isLoading: false });
+        this.props.handleViewChange();
+      });
+    });
+    event.preventDefault();
+  }
+
+  renderContent() {
+    if (this.state.isLoading) {
+      return <Spinner />
+    }
+    return (
+      <form className="form-create-account" onSubmit={this.handleSubmit}>
+        <img className="mb-4" src={logo} alt="" width="200" height="72" />
+        <div className="row">
+          <div className="col-md-6 mb-3">
+            <label htmlFor="name">Name</label>
+            <input type="text" className="form-control" id="name" name="name" onChange={this.handleChange} required />
+          </div>
+          <div className="col-md-6 mb-3">
+            <label htmlFor="email">Email Address</label>
+            <input type="email" className="form-control" id="email" name="email" onChange={this.handleChange} required />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-6 mb-3">
+            <label htmlFor="phone">Phone</label>
+            <input type="number" className="form-control" id="phone" name="phone" onChange={this.handleChange} required />
+          </div>
+          <div className="col-md-6 mb-3">
+            <label htmlFor="address">Address</label>
+            <input type="text" className="form-control" id="address" name="address" onChange={this.handleChange} required />
+          </div>
+        </div>
+        <hr />
+          <div className="row">
+            <div className="col-md-12 mb-3">
+              <label htmlFor="bankName">Bank Name</label>
+              <input type="text" className="form-control" id="bankName" name="bankName" onChange={this.handleChange} required />
+            </div>
+            <div className="col-md-6 mb-3">
+              <label htmlFor="accountNo">Account #</label>
+              <input type="number" className="form-control" id="accountNo" name="accountNo" onChange={this.handleChange} required />
+            </div>
+            <div className="col-md-6 mb-3">
+              <label htmlFor="routingNo">Routing #</label>
+              <input type="number" className="form-control" id="routingNo" name="routingNo" onChange={this.handleChange} required />
+            </div>
+          </div>
+          <button className="btn btn-primary btn-block my-4" type="submit">Sign Up</button>
+          <a href="#" onClick={this.props.handleViewChange}>&larr; Back to Login</a>
+      </form>
+    )
+  }
+
+  render() {
     return (
       <div className="container">
         <div className="login-form text-center">
-          <form className="form-signin">
-            <img className="mb-4" src={logo} alt="" width="200" height="72" />
-
-            <div className="row">
-              <div className="col-md-6 mb-3">
-                <label htmlFor="firstName">First Name</label>
-                <input type="text" className="form-control" id="firstName" placeholder="" value="" required />
-                <div className="invalid-feedback">
-                  Valid first name is required.
-                </div>
-              </div>
-              <div className="col-md-6 mb-3">
-                <label htmlFor="lastName">Last Name</label>
-                <input type="text" className="form-control" id="lastName" placeholder="" value="" required />
-                <div className="invalid-feedback">
-                  Valid last name is required.
-                </div>
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="col-md-12 mb-3">
-                <label htmlFor="firstName">Email Address</label>
-                <input type="text" className="form-control" id="firstName" placeholder="" value="" required />
-                <div className="invalid-feedback">
-                  Valid first name is required.
-                </div>
-              </div>
-              <div className="col-md-6 mb-3">
-                <label htmlFor="lastName">Phone</label>
-                <input type="text" className="form-control" id="lastName" placeholder="" value="" required />
-                <div className="invalid-feedback">
-                  Valid last name is required.
-                </div>
-              </div>
-              <div className="col-md-6 mb-3">
-                <label htmlFor="lastName">City</label>
-                <input type="text" className="form-control" id="lastName" placeholder="" value="" required />
-                <div className="invalid-feedback">
-                  Valid last name is required.
-                </div>
-              </div>
-            </div>
-
-            <hr />
-
-              <div className="row">
-                <div className="col-md-12 mb-3">
-                  <label htmlFor="firstName">Bank Name</label>
-                  <input type="text" className="form-control" id="firstName" placeholder="" value="" required />
-                  <div className="invalid-feedback">
-                    Valid first name is required.
-                  </div>
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="lastName">Account #</label>
-                  <input type="text" className="form-control" id="lastName" placeholder="" value="" required />
-                  <div className="invalid-feedback">
-                    Valid last name is required.
-                  </div>
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="lastName">Routing #</label>
-                  <input type="text" className="form-control" id="lastName" placeholder="" value="" required />
-                  <div className="invalid-feedback">
-                    Valid last name is required.
-                  </div>
-                </div>
-              </div>
-
-              <button className="btn btn-primary btn-block my-4" type="submit">Sign Up</button>
-              <a href="#" onClick={this.props.handleViewChange}>&larr; Back to Login</a>
-
-
-          </form>
+          {this.renderContent()}
         </div>
       </div>
     );
