@@ -21,17 +21,6 @@ class SubmitArtworkAuction extends Component {
               <div className="container-fluid">
 
                 <div className="mb-3">
-                  <label htmlFor="country">Auction House</label>
-                  <select className="custom-select d-block w-100" id="country" required>
-                    <option value="">Choose...</option>
-                    <option>Auction House 1</option>
-                  </select>
-                  <div className="invalid-feedback">
-                    Please select a valid country.
-                  </div>
-                </div>
-
-                <div className="mb-3">
                   <label htmlFor="username">Buy-It-Now Price</label>
                   <div className="input-group">
                     <div className="input-group-prepend">

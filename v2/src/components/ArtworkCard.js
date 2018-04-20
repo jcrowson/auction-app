@@ -7,7 +7,7 @@ class ArtworkCard extends Component {
   constructor(props) {
     super(props);
 
-    let aucStartDateTime = '2018-04-20 10:18:00';
+    let aucStartDateTime = '2018-04-20 16:40:00';
     let openTime = moment(aucStartDateTime, 'YYYY-MM-DD HH:mm:ss');
     let endTime = moment(aucStartDateTime, 'YYYY-MM-DD HH:mm:ss').add(5, 'minutes');
     this.state = {
@@ -25,7 +25,12 @@ class ArtworkCard extends Component {
   }
 
   componentDidMount() {
+    this.countDownAuction();
     this.interval = setInterval(() => this.countDownAuction(), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   render() {
@@ -36,14 +41,14 @@ class ArtworkCard extends Component {
           <img className="card-img-top" src={require(`../assets/${img}`)} alt='Artwork' />
           <div className="card-body">
             <h5 className="card-title">{name}</h5>
-            <p className="card-text">{description.substring(0, 100)}...</p>
+            <p className="card-text text-muted">{description.substring(0, 100)}...</p>
             {isAuction && <p><small>Current bid: </small><strong>$1,000,000</strong></p>}
             <div className="d-flex justify-content-between align-items-center">
               <div className="btn-group">
                 {isAuction && <button onClick={() => this.props.handleClick(this.props.id)} type="button" className="btn btn-sm btn-outline-danger" data-toggle="modal" data-target=".art-detail-modal">Place Bid</button>}
                 {!isAuction && <button onClick={() => this.props.handleClick(this.props.id)} type="button" className="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target=".submit-artwork-auction-modal">Submit for Auction</button>}
               </div>
-              {this.props.isAuction && <small className="text-muted">{this.state.timeLeft}</small>}
+              {this.props.isAuction && <span className="badge badge-pill badge-info">{this.state.timeLeft}</span>}
             </div>
           </div>
         </div>

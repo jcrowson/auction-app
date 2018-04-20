@@ -1,9 +1,33 @@
 import React, { Component } from 'react';
 
+import ArtworkAPI from '../services/api/Users.js';
+
 class NewArtwork extends Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      isLoading: false,
+    }
+
+    this.artworkAPI = new ArtworkAPI();
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+    let user = {...this.state.user}
+    user[name] = value;
+    this.setState({user});
+  }
+
+  handleSubmit(event) {
+
   }
 
   render() {
@@ -23,37 +47,28 @@ class NewArtwork extends Component {
                 <div className="row">
                   <div className="col-md-12 mb-3">
                     <label htmlFor="firstName">Artwork Name</label>
-                    <input type="text" className="form-control" id="firstName" placeholder="" value="" required />
-                    <div className="invalid-feedback">
-                      Valid first name is required.
-                    </div>
+                    <input type="text" className="form-control" id="artworkName" onChange={this.handleChange} required />
                   </div>
                 </div>
 
                 <div className="mb-3">
                   <div className="form-group">
-                    <label htmlFor="exampleFormControlTextarea1">Description</label>
-                    <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <label htmlFor="artworkDescription">Description</label>
+                    <textarea className="form-control" id="artworkDescription" onChange={this.handleChange} rows="3"></textarea>
                   </div>
                 </div>
 
                 <div className="row">
                   <div className="col-md-6 mb-3">
                     <label htmlFor="firstName">Creation Date</label>
-                    <input type="text" className="form-control" id="firstName" placeholder="" value="" required />
-                    <div className="invalid-feedback">
-                      Valid first name is required.
-                    </div>
+                    <input type="text" className="form-control" id="creationDate" onChange={this.handleChange} required />
                   </div>
                   <div className="col-md-6 mb-3">
-                    <label htmlFor="country">Type</label>
-                    <select className="custom-select d-block w-100" id="country" required>
+                    <label htmlFor="type">Type</label>
+                    <select className="custom-select d-block w-100" id="type" required>
                       <option value="">Choose...</option>
                       <option>Classical</option>
                     </select>
-                    <div className="invalid-feedback">
-                      Please select a valid country.
-                    </div>
                   </div>
                 </div>
 
@@ -83,10 +98,7 @@ class NewArtwork extends Component {
                 <div className="row">
                   <div className="col-md-6 mb-3">
                     <label htmlFor="size">Size (e.g. 24 x 24)</label>
-                    <input type="text" className="form-control" id="lastName" placeholder="" value="" required />
-                    <div className="invalid-feedback">
-                      Valid last name is required.
-                    </div>
+                    <input type="text" className="form-control" id="size" onChange={this.handleChange} required />
                   </div>
                   <div className="col-md-6 mb-3">
                     <label htmlFor="size">Base Price</label>
@@ -94,10 +106,7 @@ class NewArtwork extends Component {
                       <div className="input-group-prepend">
                         <span className="input-group-text">$</span>
                       </div>
-                      <input type="number" className="form-control" id="username" placeholder="Dollars" required />
-                      <div className="invalid-feedback">
-                        Your username is required.
-                      </div>
+                      <input type="number" className="form-control" id="basePrice" placeholder="Dollars" onChange={this.handleChange} required />
                     </div>
                   </div>
                 </div>

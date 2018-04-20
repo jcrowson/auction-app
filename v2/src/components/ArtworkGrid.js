@@ -9,13 +9,13 @@ class ArtworkGrid extends Component {
 
   constructor(props) {
     super(props);
-    this.handleSelectArtwork = this.handleSelectArtwork.bind(this);
     this.state = {
       selectedArtwork: {
         name: 'Mona Lisa',
         description: 'The Mona Lisa is a half-length portrait painting by the Italian Renaissance artist Leonardo da Vinci that has been described as "the best known, the most visited, the most written about, the most sung.',
         img: 'mona.jpg',
       },
+      isShowingAllOpenAuctions: false,
       art: [{
         name: 'Mona Lisa',
         description: 'The Mona Lisa is a half-length portrait painting by the Italian Renaissance artist Leonardo da Vinci that has been described as "the best known, the most visited, the most written about, the most sung.',
@@ -41,6 +41,18 @@ class ArtworkGrid extends Component {
         name: 'The Son of Man',
         description: 'The Son of Man is a 1964 painting by the Belgian surrealist painter René Magritte. It is perhaps his most well-known artwork. Magritte painted it as a self-portrait.',
         img: 'son-of-man.jpg',
+      }, {
+        name: 'The Son of Man',
+        description: 'The Son of Man is a 1964 painting by the Belgian surrealist painter René Magritte. It is perhaps his most well-known artwork. Magritte painted it as a self-portrait.',
+        img: 'son-of-man.jpg',
+      }, {
+        name: 'The Son of Man',
+        description: 'The Son of Man is a 1964 painting by the Belgian surrealist painter René Magritte. It is perhaps his most well-known artwork. Magritte painted it as a self-portrait.',
+        img: 'son-of-man.jpg',
+      }, {
+        name: 'The Son of Man',
+        description: 'The Son of Man is a 1964 painting by the Belgian surrealist painter René Magritte. It is perhaps his most well-known artwork. Magritte painted it as a self-portrait.',
+        img: 'son-of-man.jpg',
       }]
     }
   }
@@ -49,32 +61,36 @@ class ArtworkGrid extends Component {
 
   }
 
-  handleSelectArtwork(artworkIndex) {
-    this.setState({ selectedArtwork: this.state.art[artworkIndex] });
-  }
-
   render() {
+    let {selectedArtwork, art, openAuctions, isShowingAllOpenAuctions} = this.state;
     return (
       <main role="main">
         <div className="py-5 bg-light">
           <div className="container">
-            <h5 className="text-muted">Open Auctions</h5>
+            <div className="row mb-3">
+              <div className="col-md-6">
+                <h5 className="text-muted">Open Auctions ({openAuctions.length})</h5>
+              </div>
+              <div className="col-md-6">
+                <a className="float-right" href="#" onClick={() => this.setState({isShowingAllOpenAuctions: !this.state.isShowingAllOpenAuctions})}>{ isShowingAllOpenAuctions ? 'Show less' : 'Show all'}</a>
+              </div>
+            </div>
             <div className="row">
-              { this.state.openAuctions.map((art, i) => <ArtworkCard isAuction handleClick={this.handleSelectArtwork} id={i} {...art} key={i} />) }
+              { openAuctions.slice(0, isShowingAllOpenAuctions ? openAuctions.count : 3).map((art, i) => <ArtworkCard isAuction handleClick={(artworkIndex) => this.setState({ selectedArtwork: openAuctions[artworkIndex] })} id={i} {...art} key={i} />) }
             </div>
             <hr />
             <div className="row mb-3">
               <div className="col-md-6">
-                <h5 className="text-muted">Your Artwork</h5>
+                <h5 className="text-muted">Your Artwork ({this.state.art.length})</h5>
               </div>
               <div className="col-md-6">
                 <button className="btn btn-primary btn-sm float-right" type="button" data-toggle="modal" data-target=".new-artwork-modal">Add Artwork to Blockchain</button>
               </div>
             </div>
             <div className="row">
-              { this.state.art.map((art, i) => <ArtworkCard handleClick={this.handleSelectArtwork} id={i} {...art} key={i} />) }
+              { this.state.art.map((art, i) => <ArtworkCard handleClick={(artworkIndex) => this.setState({ selectedArtwork: this.state.art[artworkIndex] })} id={i} {...art} key={i} />) }
             </div>
-            <ArtworkDetail {...this.state.selectedArtwork}/>
+            <ArtworkDetail {...selectedArtwork}/>
             <NewArtwork />
             <SubmitArtworkAuction />
           </div>
