@@ -1,10 +1,11 @@
+const ACCESS_TOKEN = '12345';
 const API_ENDPOINT = 'https://postman-echo.com/';
 const GET_REQUEST_OPTIONS = {
-  headers: new Headers({'content-type': 'application/json', 'cache-control': 'no-cache'}),
+  headers: new Headers({'content-type': 'application/json', 'cache-control': 'no-cache', 'x-access-token': ACCESS_TOKEN}),
   'method': 'GET',
 };
 const POST_REQUEST_OPTIONS = {
-  headers: new Headers({'content-type': 'application/json', 'cache-control': 'no-cache'}),
+  headers: new Headers({'content-type': 'application/json', 'cache-control': 'no-cache', 'x-access-token': ACCESS_TOKEN}),
   'method': 'POST',
 };
 

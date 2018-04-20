@@ -46,7 +46,7 @@ class ArtworkGrid extends Component {
   }
 
   componentDidMount() {
-    
+
   }
 
   handleSelectArtwork(artworkIndex) {
@@ -63,7 +63,14 @@ class ArtworkGrid extends Component {
               { this.state.openAuctions.map((art, i) => <ArtworkCard isAuction handleClick={this.handleSelectArtwork} id={i} {...art} key={i} />) }
             </div>
             <hr />
-            <h5 className="text-muted">Your Artwork</h5>
+            <div className="row mb-3">
+              <div className="col-md-6">
+                <h5 className="text-muted">Your Artwork</h5>
+              </div>
+              <div className="col-md-6">
+                <button className="btn btn-primary btn-sm float-right" type="button" data-toggle="modal" data-target=".new-artwork-modal">Add Artwork to Blockchain</button>
+              </div>
+            </div>
             <div className="row">
               { this.state.art.map((art, i) => <ArtworkCard handleClick={this.handleSelectArtwork} id={i} {...art} key={i} />) }
             </div>

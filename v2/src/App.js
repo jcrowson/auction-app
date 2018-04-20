@@ -9,16 +9,17 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.handleLogin = this.handleLogin.bind(this);
     this.state = {
-      isLoggedIn: false,
+      isLoggedIn: true,
       isAuctionHouse: false,
     };
+
+    this.handleLogin = this.handleLogin.bind(this);
   }
 
   handleLogin() {
     this.setState({
-      isLoggedIn: true,
+      isLoggedIn: !this.state.isLoggedIn,
     })
   }
 
@@ -46,7 +47,7 @@ class App extends Component {
     else {
       return (
         <div>
-          <Navbar handleViewChange={this.handleViewChange.bind(this)} {...this.state} />
+          <Navbar handleViewChange={this.handleViewChange.bind(this)} handleLogin={this.handleLogin} {...this.state} />
           <ArtworkGrid />
           <Footer />
         </div>

@@ -15,11 +15,9 @@ class Navbar extends Component {
         </div>
       );
     }
-    if (!isAuctionHouse) {
-      return (
-        <button className="btn btn-primary mr-sm-2" type="button" data-toggle="modal" data-target=".new-artwork-modal">Add Artwork to Blockchain</button>
-      );
-    }
+    return (
+      <button className="btn btn-outline-primary btn-sm ml-sm-2" type="button" onClick={this.props.handleLogin}>Sign Out</button>
+    );
   }
 
   changeView({target}) {
@@ -35,11 +33,11 @@ class Navbar extends Component {
         </a>
         <form className="form-inline">
           <div className="btn-toolbar">
-            {this.renderContent()}
             <div className="form-check pl-4">
               <input type="checkbox" className="form-check-input" id="exampleCheck1" onChange={this.changeView.bind(this)}/>
               <label className="form-check-label text-muted" htmlFor="exampleCheck1">Switch View to <mark>Auction House</mark> (Demo Purposes)</label>
             </div>
+            {this.renderContent()}
           </div>
         </form>
       </nav>
