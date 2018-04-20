@@ -33,20 +33,13 @@ class Login extends Component {
   }
 
   handleSubmit(event) {
-    this.setState({
-      user: {
-        ...this.state.user,
-        org: "org1",
-      },
-      isLoading: true,
-    }, () => {
-      let user = { user: this.state.user };
-      this.usersAPI.login(user).then((res) => {
-        this.setState({ isLoading: false });
-        this.props.handleLogin();
-      });
-    });
     event.preventDefault();
+    this.setState({ isLoading: true });
+    let user = { user: this.state.user };
+    this.usersAPI.login(user).then((res) => {
+      this.setState({ isLoading: false });
+      this.props.handleLogin();
+    });
   }
 
   handleViewChange() {
@@ -67,7 +60,7 @@ class Login extends Component {
             <input type="email" className="form-control" name="username" placeholder="Email" onChange={this.handleChange} required autoFocus />
             <input type="password" className="form-control mt-2" name="password" placeholder="Password" onChange={this.handleChange} required />
             <button className="btn btn-primary btn-block my-4" type="submit">Sign in</button>
-            <a href="#" onClick={this.handleViewChange}>Create a New Account</a>
+            <a href="#createNewAccount" onClick={this.handleViewChange}>Create a New Account</a>
             <img className="mt-4" src={fabricLogo} alt="" width="200" />
             <p className="mt-5 mb-3 text-muted">&copy; Chainyard.com 2018</p>
           </form>

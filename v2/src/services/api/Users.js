@@ -1,4 +1,4 @@
-import { API_ENDPOINT, HEADERS, ACCESS_TOKEN } from './Constants.js';
+import { API_ENDPOINT, HEADERS } from './Constants.js';
 
 export default class Users {
 

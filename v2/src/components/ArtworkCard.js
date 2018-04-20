@@ -45,7 +45,7 @@ class ArtworkCard extends Component {
             {isAuction && <p><small>Current bid: </small><strong>$1,000,000</strong></p>}
             <div className="d-flex justify-content-between align-items-center">
               <div className="btn-group">
-                {isAuction && <button onClick={() => this.props.handleClick(this.props.id)} type="button" className="btn btn-sm btn-outline-danger" data-toggle="modal" data-target=".art-detail-modal">Place Bid</button>}
+                {isAuction && <button onClick={() => this.props.handleClick(this.props.id)} type="button" className="btn btn-sm btn-outline-primary" data-toggle="modal" data-target=".art-detail-modal">Place Bid</button>}
                 {!isAuction && <button onClick={() => this.props.handleClick(this.props.id)} type="button" className="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target=".submit-artwork-auction-modal">Submit for Auction</button>}
               </div>
               {this.props.isAuction && <span className="badge badge-pill badge-info">{this.state.timeLeft}</span>}

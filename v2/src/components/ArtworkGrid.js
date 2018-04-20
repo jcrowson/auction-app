@@ -72,7 +72,7 @@ class ArtworkGrid extends Component {
                 <h5 className="text-muted">Open Auctions ({openAuctions.length})</h5>
               </div>
               <div className="col-md-6">
-                <a className="float-right" href="#" onClick={() => this.setState({isShowingAllOpenAuctions: !this.state.isShowingAllOpenAuctions})}>{ isShowingAllOpenAuctions ? 'Show less' : 'Show all'}</a>
+                <a className="float-right" href="#show" onClick={() => this.setState({isShowingAllOpenAuctions: !this.state.isShowingAllOpenAuctions})}>{ isShowingAllOpenAuctions ? 'Show less' : 'Show all'}</a>
               </div>
             </div>
             <div className="row">
@@ -81,14 +81,14 @@ class ArtworkGrid extends Component {
             <hr />
             <div className="row mb-3">
               <div className="col-md-6">
-                <h5 className="text-muted">Your Artwork ({this.state.art.length})</h5>
+                <h5 className="text-muted">Your Artwork ({art.length})</h5>
               </div>
               <div className="col-md-6">
                 <button className="btn btn-primary btn-sm float-right" type="button" data-toggle="modal" data-target=".new-artwork-modal">Add Artwork to Blockchain</button>
               </div>
             </div>
             <div className="row">
-              { this.state.art.map((art, i) => <ArtworkCard handleClick={(artworkIndex) => this.setState({ selectedArtwork: this.state.art[artworkIndex] })} id={i} {...art} key={i} />) }
+              { art.map((art, i) => <ArtworkCard handleClick={(artworkIndex) => this.setState({ selectedArtwork: art[artworkIndex] })} id={i} {...art} key={i} />) }
             </div>
             <ArtworkDetail {...selectedArtwork}/>
             <NewArtwork />
