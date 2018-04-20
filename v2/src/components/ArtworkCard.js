@@ -7,7 +7,8 @@ class ArtworkCard extends Component {
   constructor(props) {
     super(props);
 
-    let aucStartDateTime = '2018-04-20 16:40:00';
+    // let aucStartDateTime = '2018-04-20 16:40:00';
+    let aucStartDateTime = moment();
     let openTime = moment(aucStartDateTime, 'YYYY-MM-DD HH:mm:ss');
     let endTime = moment(aucStartDateTime, 'YYYY-MM-DD HH:mm:ss').add(5, 'minutes');
     this.state = {

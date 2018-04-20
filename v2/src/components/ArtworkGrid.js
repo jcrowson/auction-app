@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import emptyAuctions from '../assets/empty-auction-state.svg';
+
 import ArtworkCard from './ArtworkCard.js';
 import ArtworkDetail from './ArtworkDetail.js';
 import NewArtwork from './NewArtwork.js';
@@ -45,15 +47,7 @@ class ArtworkGrid extends Component {
         name: 'The Son of Man',
         description: 'The Son of Man is a 1964 painting by the Belgian surrealist painter René Magritte. It is perhaps his most well-known artwork. Magritte painted it as a self-portrait.',
         img: 'son-of-man.jpg',
-      }, {
-        name: 'The Son of Man',
-        description: 'The Son of Man is a 1964 painting by the Belgian surrealist painter René Magritte. It is perhaps his most well-known artwork. Magritte painted it as a self-portrait.',
-        img: 'son-of-man.jpg',
-      }, {
-        name: 'The Son of Man',
-        description: 'The Son of Man is a 1964 painting by the Belgian surrealist painter René Magritte. It is perhaps his most well-known artwork. Magritte painted it as a self-portrait.',
-        img: 'son-of-man.jpg',
-      }]
+      }],
     }
   }
 
@@ -72,14 +66,15 @@ class ArtworkGrid extends Component {
                 <h5 className="text-muted">Open Auctions ({openAuctions.length})</h5>
               </div>
               <div className="col-md-6">
-                <a className="float-right" href="#show" onClick={() => this.setState({isShowingAllOpenAuctions: !this.state.isShowingAllOpenAuctions})}>{ isShowingAllOpenAuctions ? 'Show less' : 'Show all'}</a>
+                { openAuctions.length > 3 && <a className="float-right" href="#show" onClick={() => this.setState({isShowingAllOpenAuctions: !this.state.isShowingAllOpenAuctions})}>{ isShowingAllOpenAuctions ? 'Show less' : 'Show all'}</a> }
               </div>
             </div>
             <div className="row">
-              { openAuctions.slice(0, isShowingAllOpenAuctions ? openAuctions.count : 3).map((art, i) => <ArtworkCard isAuction handleClick={(artworkIndex) => this.setState({ selectedArtwork: openAuctions[artworkIndex] })} id={i} {...art} key={i} />) }
+              { openAuctions.length == 0 && <img className="mb-4 mx-auto" src={emptyAuctions} /> }
+              { openAuctions.length > 0 && openAuctions.slice(0, isShowingAllOpenAuctions ? openAuctions.count : 3).map((art, i) => <ArtworkCard isAuction handleClick={(artworkIndex) => this.setState({ selectedArtwork: openAuctions[artworkIndex] })} id={i} {...art} key={i} />) }
             </div>
             <hr />
-            <div className="row mb-3">
+            <div className="row mb-3 mt-5">
               <div className="col-md-6">
                 <h5 className="text-muted">Your Artwork ({yourArt.length})</h5>
               </div>
