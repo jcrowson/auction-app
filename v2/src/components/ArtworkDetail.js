@@ -13,7 +13,7 @@ class ArtworkDetail extends Component {
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLongTitle">Artwork Detail</h5>
+              <h5 className="modal-title">Artwork Detail</h5>
               <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>

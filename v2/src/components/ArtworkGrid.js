@@ -16,7 +16,7 @@ class ArtworkGrid extends Component {
         img: 'mona.jpg',
       },
       isShowingAllOpenAuctions: false,
-      art: [{
+      yourArt: [{
         name: 'Mona Lisa',
         description: 'The Mona Lisa is a half-length portrait painting by the Italian Renaissance artist Leonardo da Vinci that has been described as "the best known, the most visited, the most written about, the most sung.',
         img: 'mona.jpg',
@@ -62,7 +62,7 @@ class ArtworkGrid extends Component {
   }
 
   render() {
-    let {selectedArtwork, art, openAuctions, isShowingAllOpenAuctions} = this.state;
+    let { selectedArtwork, isShowingAllOpenAuctions, yourArt, openAuctions } = this.state;
     return (
       <main role="main">
         <div className="py-5 bg-light">
@@ -81,18 +81,18 @@ class ArtworkGrid extends Component {
             <hr />
             <div className="row mb-3">
               <div className="col-md-6">
-                <h5 className="text-muted">Your Artwork ({art.length})</h5>
+                <h5 className="text-muted">Your Artwork ({yourArt.length})</h5>
               </div>
               <div className="col-md-6">
                 <button className="btn btn-primary btn-sm float-right" type="button" data-toggle="modal" data-target=".new-artwork-modal">Add Artwork to Blockchain</button>
               </div>
             </div>
             <div className="row">
-              { art.map((art, i) => <ArtworkCard handleClick={(artworkIndex) => this.setState({ selectedArtwork: art[artworkIndex] })} id={i} {...art} key={i} />) }
+              { yourArt.map((art, i) => <ArtworkCard handleClick={(artworkIndex) => this.setState({ selectedArtwork: yourArt[artworkIndex] })} id={i} {...art} key={i} />) }
             </div>
-            <ArtworkDetail {...selectedArtwork}/>
+            <ArtworkDetail {...selectedArtwork} />
             <NewArtwork />
-            <SubmitArtworkAuction />
+            <SubmitArtworkAuction {...selectedArtwork} />
           </div>
         </div>
       </main>
