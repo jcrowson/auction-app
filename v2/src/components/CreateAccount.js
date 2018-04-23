@@ -3,7 +3,7 @@ import logo from '../assets/logo.svg';
 
 import Spinner from './Spinner.js';
 
-import UsersAPI from '../services/api/Users.js';
+import UsersAPI from '../services/Users.js';
 
 class CreateAccount extends Component {
 

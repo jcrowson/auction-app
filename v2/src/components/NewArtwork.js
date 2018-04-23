@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import ArtworkAPI from '../services/api/Artwork.js';
+import ArtworkAPI from '../services/Artwork.js';
 
 class NewArtwork extends Component {
 
@@ -15,6 +15,11 @@ class NewArtwork extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleUploadFile(event) {
+    let file = event.target.files[0];
+    console.log(file);
   }
 
   handleChange(event) {
@@ -124,7 +129,7 @@ class NewArtwork extends Component {
                   <div className="mb-3">
                     <div className="form-group">
                       <label htmlFor="exampleFormControlFile1">Upload Photo of Artwork</label>
-                      <input type="file" accept="image/*" className="form-control-file" id="exampleFormControlFile1" />
+                      <input type="file" accept="image/*" className="form-control-file" onChange={this.handleUploadFile}/>
                     </div>
                   </div>
 

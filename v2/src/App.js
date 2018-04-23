@@ -5,22 +5,27 @@ import ArtworkGrid from './components/ArtworkGrid.js';
 import ManageArtworks from './components/ManageArtworks.js';
 import Footer from './components/Footer.js';
 
+import UserService from './services/Users.js';
+
 class App extends Component {
 
   constructor(props) {
     super(props);
+    this.user = new UserService();
     this.state = {
-      isLoggedIn: true,
+      isLoggedIn: this.user.currentUser().username ? true : false,
       isAuctionHouse: false,
     };
-
     this.handleLogin = this.handleLogin.bind(this);
   }
 
   handleLogin() {
+    if (this.state.isLoggedIn) {
+      this.user.logout();
+    }
     this.setState({
       isLoggedIn: !this.state.isLoggedIn,
-    })
+    });
   }
 
   handleViewChange(val) {
