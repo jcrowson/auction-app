@@ -4,7 +4,7 @@ export default class Artwork {
 
   createArtwork(newArtwork) {
     return new Promise(function (resolve, reject) {
-      fetch(API_ENDPOINT + 'post', {
+      fetch(API_ENDPOINT + '/item/createItem', {
         headers: HEADERS,
         method: 'POST',
         body: JSON.stringify(newArtwork),

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
-import ArtworkAPI from '../services/Artwork.js';
+import ArtworkService from '../services/Artwork.js';
+import UtilsService from '../services/Utils.js';
 
 class NewArtwork extends Component {
 
@@ -11,22 +12,31 @@ class NewArtwork extends Component {
       isLoading: false,
     }
 
-    this.artworkAPI = new ArtworkAPI();
+    this.artwork = new ArtworkService();
+    this.utils = new UtilsService();
 
+    this.handleUploadFile = this.handleUploadFile.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+
   handleUploadFile(event) {
     let file = event.target.files[0];
-    console.log(file);
+    var reader  = new FileReader();
+    let artwork = {...this.state.artwork};
+    this.utils.getBase64(file, (result) => {
+      artwork["itemImage"] = result;
+    });
+    artwork["itemImageType"] = file.type;
+    this.setState({ artwork });
   }
 
   handleChange(event) {
     const target = event.target;
     const value = target.value;
     const name = target.name;
-    let artwork = {...this.state.artwork}
+    let artwork = {...this.state.artwork};
     artwork[name] = value;
     this.setState({ artwork });
   }
@@ -34,8 +44,7 @@ class NewArtwork extends Component {
   handleSubmit(event) {
     event.preventDefault();
     this.setState({ isLoading: true });
-    let artwork = { artwork: this.state.artwork };
-    this.artworkAPI.createArtwork(artwork).then((res) => {
+    this.artwork.createArtwork(this.state.artwork).then((res) => {
       this.setState({ isLoading: false });
       console.log(res);
     });
@@ -66,7 +75,7 @@ class NewArtwork extends Component {
                   <div className="mb-3">
                     <div className="form-group">
                       <label htmlFor="artworkDescription">Description</label>
-                      <textarea className="form-control" id="artworkDescription" name="itemDesc" onChange={this.handleChange} rows="3"></textarea>
+                      <textarea className="form-control" id="artworkDescription" name="itemDescription" onChange={this.handleChange} rows="3"></textarea>
                     </div>
                   </div>
 
@@ -78,11 +87,11 @@ class NewArtwork extends Component {
                     <div className="col-md-6 mb-3">
                       <label htmlFor="type">Type</label>
                       <select name="itemType" onChange={this.handleChange} className="custom-select d-block w-100" id="type" required>
-                        <option value="classical">Classical</option>
-                        <option value="impressionism">Impressionism</option>
-                        <option value="cubism">Cubism</option>
-                        <option value="surrealism">Surrealism</option>
-                        <option value="expressionism">Expressionism</option>
+                        <option value="Classical">Classical</option>
+                        <option value="Impressionism">Impressionism</option>
+                        <option value="Cubism">Cubism</option>
+                        <option value="Surrealism">Surrealism</option>
+                        <option value="Expressionism">Expressionism</option>
                       </select>
                     </div>
                   </div>
@@ -91,21 +100,21 @@ class NewArtwork extends Component {
                     <div className="col-md-6 mb-3">
                       <label htmlFor="country">Subject Area</label>
                       <select name="itemSubject" onChange={this.handleChange} className="custom-select d-block w-100" id="subject" required>
-                        <option value="portrait">Portrait</option>
-                        <option value="landscape">Landscape</option>
-                        <option value="floral">Floral</option>
-                        <option value="animals">Animals</option>
-                        <option value="architecture">Architecture</option>
+                        <option value="Portrait">Portrait</option>
+                        <option value="Landscape">Landscape</option>
+                        <option value="Floral">Floral</option>
+                        <option value="Animals">Animals</option>
+                        <option value="Architecture">Architecture</option>
                       </select>
                     </div>
                     <div className="col-md-6 mb-3">
                       <label htmlFor="country">Media</label>
                       <select name="itemMedia" onChange={this.handleChange} className="custom-select d-block w-100" id="media" required>
-                        <option value="oil">Oil</option>
-                        <option value="acrylic">Acrylic</option>
-                        <option value="digital">Digital</option>
-                        <option value="watercolor">Watercolor</option>
-                        <option value="ceramic">Ceramic</option>
+                        <option value="Oil">Oil</option>
+                        <option value="Acrylic">Acrylic</option>
+                        <option value="Digital">Digital</option>
+                        <option value="Watercolor">Watercolor</option>
+                        <option value="Ceramic">Ceramic</option>
                       </select>
                     </div>
                   </div>
