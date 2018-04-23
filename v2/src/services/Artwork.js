@@ -26,7 +26,7 @@ export default class Artwork {
 
   openAuctionForBids(auction) {
     return new Promise(function (resolve, reject) {
-      fetch(API_ENDPOINT + 'post', {
+      fetch(API_ENDPOINT + '/auction/openAuction', {
         headers: HEADERS,
         method: 'POST',
         body: JSON.stringify(auction),

@@ -31,7 +31,6 @@ class NewArtwork extends Component {
 
   handleUploadFile(event) {
     let file = event.target.files[0];
-    var reader  = new FileReader();
     let artwork = {...this.state.artwork};
     this.utils.getBase64(file, (result) => {
       artwork["itemImage"] = result;
