@@ -100,7 +100,7 @@ class CreateAccount extends Component {
     return (
       <div className="container">
         <div className="login-form text-center">
-          {this.renderContent()}
+          { this.renderContent() }
         </div>
       </div>
     );
