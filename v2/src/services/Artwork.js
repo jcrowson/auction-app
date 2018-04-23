@@ -15,7 +15,7 @@ export default class Artwork {
 
   createAuctionRequest(auctionRequest) {
     return new Promise(function (resolve, reject) {
-      fetch(API_ENDPOINT + 'post', {
+      fetch(API_ENDPOINT + '/auction/initAuction', {
         headers: HEADERS,
         method: 'POST',
         body: JSON.stringify(auctionRequest),

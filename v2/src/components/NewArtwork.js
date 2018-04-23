@@ -157,7 +157,7 @@ class NewArtwork extends Component {
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div className="modal-body new-artwork-modal">
+            <div className="modal-body">
               <div className="container-fluid">
                 { this.renderContent() }
               </div>

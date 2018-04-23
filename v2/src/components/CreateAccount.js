@@ -50,7 +50,7 @@ class CreateAccount extends Component {
 
   renderContent() {
     if (this.state.isLoading) {
-      return <Spinner />
+      return <Spinner />;
     }
     return (
       <form className="form-create-account" onSubmit={this.handleSubmit}>

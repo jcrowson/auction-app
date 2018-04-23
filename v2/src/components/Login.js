@@ -15,6 +15,9 @@ class Login extends Component {
     this.user = new UserService();
 
     this.state = {
+      user: {
+        org: "org1",
+      },
       isCreatingAccount: false,
       isLoading: false,
     };
@@ -30,8 +33,7 @@ class Login extends Component {
     const name = target.name;
     let user = {...this.state.user}
     user[name] = value;
-    user.org = "org1";
-    this.setState({user});
+    this.setState({ user });
   }
 
   handleSubmit(event) {
