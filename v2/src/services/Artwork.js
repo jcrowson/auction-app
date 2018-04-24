@@ -8,7 +8,7 @@ export default class Artwork {
         headers: HEADERS,
         method: 'POST',
         body: JSON.stringify(newArtwork),
-      }).then(response => response.json())
+      }).then(Artwork.handleErrors)
         .then(data => resolve(data));
     });
   }
@@ -44,6 +44,13 @@ export default class Artwork {
       }).then(response => response.json())
         .then(data => resolve(data));
     });
+  }
+
+  handleErrors(response) {
+    if (!response.ok) {
+      alert("error!");
+    }
+    return response.json();
   }
 
 }

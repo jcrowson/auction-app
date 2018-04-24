@@ -70,7 +70,7 @@ class ArtworkGrid extends Component {
               </div>
             </div>
             <div className="row">
-              { openAuctions.length == 0 && <img className="mb-4 mx-auto" src={emptyAuctions} /> }
+              { openAuctions.length === 0 && <img className="mb-4 mx-auto" src={emptyAuctions} alt="Empty Auction" /> }
               { openAuctions.length > 0 && openAuctions.slice(0, isShowingAllOpenAuctions ? openAuctions.count : 3).map((art, i) => <ArtworkCard isAuction handleClick={(artworkIndex) => this.setState({ selectedArtwork: openAuctions[artworkIndex] })} id={i} {...art} key={i} />) }
             </div>
             <hr />

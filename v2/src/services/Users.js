@@ -10,7 +10,7 @@ export default class Users {
         body: JSON.stringify(user),
       }).then(Users.handleErrors).then(data => {
           localStorage.setItem('user', JSON.stringify(data));
-          resolve(data);
+          // resolve(data);
         }).catch(err => {
           console.log(err);
         });

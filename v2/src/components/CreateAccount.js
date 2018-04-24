@@ -91,7 +91,7 @@ class CreateAccount extends Component {
             </div>
           </div>
           <button className="btn btn-primary btn-block my-4" type="submit">Sign Up</button>
-          <a href="#" onClick={this.props.handleViewChange}>&larr; Back to Sign In</a>
+          <a href="#login" onClick={this.props.handleViewChange}>&larr; Back to Sign In</a>
       </form>
     )
   }
