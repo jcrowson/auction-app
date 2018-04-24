@@ -55,13 +55,16 @@ class SubmitArtworkAuction extends Component {
     }
     return (
       <form onSubmit={this.handleSubmit}>
+        <div class="alert alert-primary" role="alert">
+          You are submitting to Sotheby's, London Auction House.
+        </div>
         <div className="mb-3">
           <label htmlFor="buytItNowPrice">Buy-It-Now Price</label>
           <div className="input-group">
             <div className="input-group-prepend">
               <span className="input-group-text">$</span>
             </div>
-            <input type="number" name="buyItNowPrice" className="form-control" id="buytItNowPrice" placeholder="Dollars" onChange={this.handleChange} required />
+            <input className="form-control" type="number" name="buyItNowPrice" placeholder="Dollars" onChange={this.handleChange} required />
           </div>
         </div>
         <div className="mb-3">
@@ -70,7 +73,7 @@ class SubmitArtworkAuction extends Component {
             <div className="input-group-prepend">
               <span className="input-group-text">$</span>
             </div>
-            <input type="number" name="reservePrice" className="form-control" id="reservePrice" placeholder="Dollars" onChange={this.handleChange} required />
+            <input className="form-control" type="number" name="reservePrice" max={this.state.auction.buyItNowPrice} placeholder="Dollars" onChange={this.handleChange} required />
           </div>
         </div>
         <button type="submit" className="btn btn-primary mt-2">Submit Artwork for Auction</button>
