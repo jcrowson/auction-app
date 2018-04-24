@@ -1,11 +1,11 @@
-import { API_ENDPOINT, HEADERS } from './Constants.js';
+import { CURRENT_USER, API_ENDPOINT, HEADERS } from './Constants.js';
 
 export default class Artwork {
 
   getArtworkForCurrentUser() {
     return new Promise(function (resolve, reject) {
       fetch(API_ENDPOINT + '/item/user', {
-        headers: HEADERS,
+        headers: HEADERS(),
         method: 'GET',
       }).then(response => response.json())
         .then(data => resolve(data));
@@ -15,7 +15,7 @@ export default class Artwork {
   createArtwork(newArtwork) {
     return new Promise(function (resolve, reject) {
       fetch(API_ENDPOINT + '/item/createItem', {
-        headers: HEADERS,
+        headers: HEADERS(),
         method: 'POST',
         body: JSON.stringify(newArtwork),
       }).then(response => response.json())
@@ -26,7 +26,7 @@ export default class Artwork {
   createAuctionRequest(auctionRequest) {
     return new Promise(function (resolve, reject) {
       fetch(API_ENDPOINT + '/auction/initAuction', {
-        headers: HEADERS,
+        headers: HEADERS(),
         method: 'POST',
         body: JSON.stringify(auctionRequest),
       }).then(response => response.json())
@@ -37,7 +37,7 @@ export default class Artwork {
   getAuctionRequestsForCurrentAuctionHouse() {
     return new Promise(function (resolve, reject) {
       fetch(API_ENDPOINT + '/auction/open', {
-        headers: HEADERS,
+        headers: HEADERS(),
         method: 'GET',
       }).then(response => response.json())
         .then(data => resolve(data));
@@ -47,7 +47,7 @@ export default class Artwork {
   openAuctionForBids(auction) {
     return new Promise(function (resolve, reject) {
       fetch(API_ENDPOINT + '/auction/openAuction', {
-        headers: HEADERS,
+        headers: HEADERS(),
         method: 'POST',
         body: JSON.stringify(auction),
       }).then(response => response.json())
@@ -58,7 +58,7 @@ export default class Artwork {
   makeBid(bid) {
     return new Promise(function (resolve, reject) {
       fetch(API_ENDPOINT + 'post', {
-        headers: HEADERS,
+        headers: HEADERS(),
         method: 'POST',
         body: JSON.stringify(bid),
       }).then(response => response.json())

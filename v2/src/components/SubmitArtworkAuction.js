@@ -55,7 +55,7 @@ class SubmitArtworkAuction extends Component {
     }
     return (
       <form onSubmit={this.handleSubmit}>
-        <div class="alert alert-primary" role="alert">
+        <div className="alert alert-primary" role="alert">
           You are submitting to Sotheby's, London Auction House.
         </div>
         <div className="mb-3">

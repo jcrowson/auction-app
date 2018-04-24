@@ -4,7 +4,7 @@ export default class Users {
 
   login(user) {
     return fetch(API_ENDPOINT + '/user/login', {
-      headers: HEADERS,
+      headers: HEADERS(),
       method: 'POST',
       body: JSON.stringify(user),
     }).then(response => response.json())
@@ -17,7 +17,7 @@ export default class Users {
   createNewUser(user) {
     return new Promise(function (resolve, reject) {
       fetch(API_ENDPOINT + '/user/createUser', {
-        headers: HEADERS,
+        headers: HEADERS(),
         method: 'POST',
         body: JSON.stringify(user),
       }).then(response => response.json())

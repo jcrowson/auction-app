@@ -40,7 +40,6 @@ class Login extends Component {
     event.preventDefault();
     this.setState({ isLoading: true });
     this.user.login(this.state.user).then((response) => {
-      console.log('getting response in handle submit: ', response);
       this.props.handleLogin();
       this.setState({ isLoading: false });
     }).catch(err => {

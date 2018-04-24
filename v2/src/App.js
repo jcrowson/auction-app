@@ -14,14 +14,17 @@ class App extends Component {
     this.user = new UserService();
     this.state = {
       isLoggedIn: this.user.currentUser().username ? true : false,
-      isAuctionHouse: this.user.currentUser().username === 'sotheby' ? true : false,
+      isAuctionHouse: this.user.currentUser().username === 'sotheby',
     };
     this.handleLogin = this.handleLogin.bind(this);
   }
 
   handleLogin() {
-    this.state.isLoggedIn ? this.user.logout() : null;
+    if (this.state.isLoggedIn) {
+      this.user.logout();
+    }
     this.setState({
+      isAuctionHouse: this.user.currentUser().username === 'sotheby',
       isLoggedIn: !this.state.isLoggedIn,
     });
   }
