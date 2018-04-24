@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 import OpenAuction from './OpenAuction.js';
 import Spinner from './Spinner.js';
@@ -20,7 +21,6 @@ class ManageAuctions extends Component {
 
   componentDidMount() {
     this.artworkAPI.getAuctionRequestsForCurrentAuctionHouse().then((response => {
-      console.log(response);
       this.setState({
         auctionRequests: response,
         isLoading: false,
@@ -81,12 +81,12 @@ const AuctionTableRow = function(props) {
     <tr>
       <th scope="row">{id + 1}</th>
       <td>{sellerID}</td>
-      <td><span className="badge badge-success">{status}</span></td>
+      <td><span className={"badge badge-" + (status === 'INIT' ? 'info' : 'success')}>{status}</span></td>
       <td>${parseInt(reservePrice).toLocaleString()}</td>
       <td>${parseInt(buyItNowPrice).toLocaleString()}</td>
-      <td>{requestDate}</td>
+      <td>{moment(requestDate, 'MMDDYYYY').format('MM-DD-YYYY')}</td>
       <td>
-        <button type="button" className="btn btn-primary btn-sm" data-toggle="modal" data-target=".open-auction-modal">Open Auction</button>
+        { status !== 'OPEN' && <button type="button" className="btn btn-primary btn-sm" data-toggle="modal" data-target=".open-auction-modal">Open Auction</button> }
       </td>
     </tr>
   );
