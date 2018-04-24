@@ -16,6 +16,7 @@ class ArtworkGrid extends Component {
     super(props);
     this.state = {
       selectedArtwork: {},
+      isBidding: false,
       isLoading: true,
       isShowingAllOpenAuctions: false,
       yourArtwork: [],
@@ -30,6 +31,7 @@ class ArtworkGrid extends Component {
   componentDidMount() {
     this.artworkAPI.getArtworkForCurrentUser().then(response => {
       this.setState({
+        selectedArtwork: response[0],
         yourArtwork: response,
         isLoading: false,
       });
@@ -49,7 +51,7 @@ class ArtworkGrid extends Component {
     }
     return (
       <div className="row">
-        { yourArtwork.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp)).map((art, i) => <ArtworkCard handleClick={(artworkIndex) => this.setState({ selectedArtwork: yourArtwork[artworkIndex] })} id={i} {...art} key={i} />) }
+        { yourArtwork.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp)).map((art, i) => <ArtworkCard handleClick={(artworkIndex) => this.setState({ selectedArtwork: yourArtwork[artworkIndex], isBidding: false })} id={i} {...art} key={i} />) }
       </div>
     );
   }
@@ -62,13 +64,13 @@ class ArtworkGrid extends Component {
     return (
       <div className="row">
         { openAuctions.length === 0 && <img className="mb-4 mx-auto" src={emptyAuctions} alt="Empty Auction" /> }
-        { openAuctions.length > 0 && openAuctions.slice(0, isShowingAllOpenAuctions ? openAuctions.count : 3).map((art, i) => <ArtworkCard isAuction handleClick={(artworkIndex) => this.setState({ selectedArtwork: openAuctions[artworkIndex] })} id={i} {...art} key={i} />) }
+        { openAuctions.length > 0 && openAuctions.slice(0, isShowingAllOpenAuctions ? openAuctions.count : 3).map((art, i) => <ArtworkCard isAuction handleClick={(artworkIndex) => this.setState({ selectedArtwork: openAuctions[artworkIndex], isBidding: true })} id={i} {...art} key={i} />) }
       </div>
     );
   }
 
   render() {
-    let { selectedArtwork, isShowingAllOpenAuctions, yourArtwork, openAuctions } = this.state;
+    let { selectedArtwork, isShowingAllOpenAuctions, isBidding, yourArtwork, openAuctions } = this.state;
     return (
       <main role="main">
         <div className="py-5 bg-light">
@@ -92,7 +94,7 @@ class ArtworkGrid extends Component {
               </div>
             </div>
             { this.renderYourArtwork() }
-            <ArtworkDetail {...selectedArtwork} />
+            <ArtworkDetail isAuction={isBidding} {...selectedArtwork} />
             <NewArtwork addArtwork={this.addArtworkToState} />
             <SubmitArtworkAuction {...selectedArtwork} />
           </div>

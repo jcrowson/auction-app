@@ -9,7 +9,7 @@ class ArtworkCard extends Component {
     let aucStartDateTime = moment();
     let openTime = moment(aucStartDateTime, 'YYYY-MM-DD HH:mm:ss');
     let endTime = moment(aucStartDateTime, 'YYYY-MM-DD HH:mm:ss').add(5, 'minutes');
-    
+
     this.state = {
       openTime: openTime,
       endTime: endTime,
@@ -47,7 +47,7 @@ class ArtworkCard extends Component {
             {isAuction && <p><small>Current bid: </small><strong>$1,000,000</strong></p>}
             <div className="d-flex justify-content-between align-items-center">
               <div className="btn-group">
-                {isAuction && <button onClick={() => this.props.handleClick(id)} type="button" className="btn btn-sm btn-outline-primary" data-toggle="modal" data-target=".art-detail-modal">Place Bid</button>}
+                <button onClick={() => this.props.handleClick(id)} type="button" className="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target=".art-detail-modal">{ isAuction ? 'Bid' : 'View' }</button>
                 {!isAuction && <button onClick={() => this.props.handleClick(id)} type="button" className="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target=".submit-artwork-auction-modal">Submit for Auction</button>}
               </div>
               {isAuction && <span className="badge badge-pill badge-info">{this.state.timeLeft}</span>}

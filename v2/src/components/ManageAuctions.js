@@ -90,6 +90,6 @@ const AuctionTableRow = function(props) {
       </td>
     </tr>
   );
-}
+};
 
 export default ManageAuctions;
