@@ -76,13 +76,13 @@ class SubmitArtworkAuction extends Component {
   }
 
   render() {
-    let { name } = this.props;
+    let { itemDetail } = this.props;
     return (
       <div id="submitArtworkModal" className="modal fade submit-artwork-auction-modal" tabIndex="-1" role="dialog" aria-labelledby="submitArtwork" aria-hidden="true">
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title">Submit {name} for Auction</h5>
+              <h5 className="modal-title">Submit {itemDetail} for Auction</h5>
               <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>

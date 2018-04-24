@@ -51,7 +51,8 @@ class NewArtwork extends Component {
   handleSubmit(event) {
     event.preventDefault();
     this.setState({ isLoading: true });
-    this.artwork.createArtwork(this.state.artwork).then((res) => {
+    this.artwork.createArtwork(this.state.artwork).then((response) => {
+      this.props.addArtwork(response);
       this.setState({ isLoading: false });
       $('#newArtworkModal').modal('hide');
     });
@@ -136,7 +137,7 @@ class NewArtwork extends Component {
         <div className="mb-3">
           <div className="form-group">
             <label htmlFor="exampleFormControlFile1">Upload Photo of Artwork</label>
-            <input type="file" accept="image/*" className="form-control-file" onChange={this.handleUploadFile}/>
+            <input type="file" accept="image/*" className="form-control-file" onChange={this.handleUploadFile} required/>
           </div>
         </div>
 

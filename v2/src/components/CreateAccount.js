@@ -32,8 +32,6 @@ class CreateAccount extends Component {
     this.setState({
       user: {
         ...this.state.user,
-        userId: 100,
-        docType: "USER",
         userType: "TRD",
         timeStamp: new Date(),
       },
@@ -55,6 +53,12 @@ class CreateAccount extends Component {
     return (
       <form className="form-create-account" onSubmit={this.handleSubmit}>
         <img className="mb-4" src={logo} alt="" width="200" height="72" />
+          <div className="row">
+            <div className="col-md-12 mb-3">
+              <label htmlFor="username">Username</label>
+              <input type="text" className="form-control" id="username" name="userID" onChange={this.handleChange} required />
+            </div>
+          </div>
         <div className="row">
           <div className="col-md-6 mb-3">
             <label htmlFor="name">Name</label>
@@ -76,22 +80,22 @@ class CreateAccount extends Component {
           </div>
         </div>
         <hr />
-          <div className="row">
-            <div className="col-md-12 mb-3">
-              <label htmlFor="bankName">Bank Name</label>
-              <input type="text" className="form-control" id="bankName" name="bankName" onChange={this.handleChange} required />
-            </div>
-            <div className="col-md-6 mb-3">
-              <label htmlFor="accountNo">Account #</label>
-              <input type="number" className="form-control" id="accountNo" name="accountNo" onChange={this.handleChange} required />
-            </div>
-            <div className="col-md-6 mb-3">
-              <label htmlFor="routingNo">Routing #</label>
-              <input type="number" className="form-control" id="routingNo" name="routingNo" onChange={this.handleChange} required />
-            </div>
+        <div className="row">
+          <div className="col-md-12 mb-3">
+            <label htmlFor="bankName">Bank Name</label>
+            <input type="text" className="form-control" id="bankName" name="bank" onChange={this.handleChange} required />
           </div>
-          <button className="btn btn-primary btn-block my-4" type="submit">Sign Up</button>
-          <a href="#login" onClick={this.props.handleViewChange}>&larr; Back to Sign In</a>
+          <div className="col-md-6 mb-3">
+            <label htmlFor="accountNo">Account #</label>
+            <input type="number" className="form-control" id="accountNo" name="accountNo" onChange={this.handleChange} required />
+          </div>
+          <div className="col-md-6 mb-3">
+            <label htmlFor="routingNo">Routing #</label>
+            <input type="number" className="form-control" id="routingNo" name="routingNo" onChange={this.handleChange} required />
+          </div>
+        </div>
+        <button className="btn btn-primary btn-block my-4" type="submit">Sign Up</button>
+        <a href="#login" onClick={this.props.handleViewChange}>&larr; Back to Sign In</a>
       </form>
     )
   }

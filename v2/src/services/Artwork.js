@@ -2,13 +2,23 @@ import { API_ENDPOINT, HEADERS } from './Constants.js';
 
 export default class Artwork {
 
+  getArtworkForCurrentUser() {
+    return new Promise(function (resolve, reject) {
+      fetch(API_ENDPOINT + '/item/user', {
+        headers: HEADERS,
+        method: 'GET',
+      }).then(response => response.json())
+        .then(data => resolve(data));
+    });
+  }
+
   createArtwork(newArtwork) {
     return new Promise(function (resolve, reject) {
       fetch(API_ENDPOINT + '/item/createItem', {
         headers: HEADERS,
         method: 'POST',
         body: JSON.stringify(newArtwork),
-      }).then(Artwork.handleErrors)
+      }).then(response => response.json())
         .then(data => resolve(data));
     });
   }
@@ -44,13 +54,6 @@ export default class Artwork {
       }).then(response => response.json())
         .then(data => resolve(data));
     });
-  }
-
-  handleErrors(response) {
-    if (!response.ok) {
-      alert("error!");
-    }
-    return response.json();
   }
 
 }

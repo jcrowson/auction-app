@@ -8,6 +8,9 @@ class ArtworkDetail extends Component {
 
   render() {
     let {name, description, img} = this.props;
+    if (!name) {
+      return null;
+    }
     return (
       <div className="modal fade art-detail-modal" tabIndex="-1" role="dialog" aria-labelledby="artDetail" aria-hidden="true">
         <div className="modal-dialog modal-lg">

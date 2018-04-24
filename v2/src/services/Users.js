@@ -8,9 +8,10 @@ export default class Users {
         headers: HEADERS,
         method: 'POST',
         body: JSON.stringify(user),
-      }).then(Users.handleErrors).then(data => {
+      }).then(response => response.json())
+        .then(data => {
           localStorage.setItem('user', JSON.stringify(data));
-          // resolve(data);
+          resolve(data);
         }).catch(err => {
           console.log(err);
         });
@@ -19,20 +20,13 @@ export default class Users {
 
   createNewUser(user) {
     return new Promise(function (resolve, reject) {
-      fetch(API_ENDPOINT + 'post', {
+      fetch(API_ENDPOINT + '/user/createUser', {
         headers: HEADERS,
         method: 'POST',
         body: JSON.stringify(user),
-      }).then(Users.handleErrors)
+      }).then(response => response.json())
         .then(data => resolve(data));
     });
-  }
-
-  handleErrors(response) {
-    if (!response.ok) {
-      alert("error!");
-    }
-    return response.json();
   }
 
   logout() {

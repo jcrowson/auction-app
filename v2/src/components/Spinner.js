@@ -2,7 +2,7 @@ import React from 'react';
 
 const Spinner = function(props) {
   return (
-    <div className="spinner-wrapper">
+    <div className="spinner-wrapper d-flex justify-content-center">
       <div className="spinner" />
     </div>
   );
