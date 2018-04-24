@@ -18,6 +18,7 @@ class SubmitArtworkAuction extends Component {
       auction: {
         requestDate: moment().format('MMDDYYYY'),
         openDate: moment().format('YYYY-MM-DD hh:mm:ss'),
+        closeDate: moment().format('YYYY-MM-DD hh:mm:ss'),
         auctionHouseID: "sotheby",
       },
       isLoading: false,
@@ -31,18 +32,20 @@ class SubmitArtworkAuction extends Component {
     const target = event.target;
     const value = target.value;
     const name = target.name;
-    let auction = {...this.state.auction}
+    let auction = {...this.state.auction};
     auction[name] = value;
     this.setState({ auction });
   }
 
   handleSubmit(event) {
     event.preventDefault();
+    let auctionRequest = {...this.state.auction };
+    auctionRequest.itemID = this.props.itemID;
+    auctionRequest.aesKey = this.props.aesKey;
     this.setState({ isLoading: true });
-    this.artwork.createAuctionRequest(this.state.auction).then((response) => {
+    this.artwork.createAuctionRequest(auctionRequest).then((response) => {
       this.setState({ isLoading: false });
       $('#submitArtworkModal').modal('hide');
-      console.log(response);
     });
   }
 
