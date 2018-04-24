@@ -6,7 +6,6 @@ class Navbar extends Component {
 
   renderContent() {
     const isLoggedIn = this.props.isLoggedIn;
-    const isAuctionHouse = this.props.isAuctionHouse;
     if (!isLoggedIn) {
       return (
         <div>
@@ -27,7 +26,7 @@ class Navbar extends Component {
   render() {
     return (
       <nav className="navbar navbar-light">
-        <a className="navbar-brand" href="#">
+        <a className="navbar-brand">
           <img src={logo} width="146" height="40" alt="" />
           <img src={fabricLogo} alt="" width="200" />
         </a>

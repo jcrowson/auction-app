@@ -14,54 +14,30 @@ class App extends Component {
     this.user = new UserService();
     this.state = {
       isLoggedIn: this.user.currentUser().username ? true : false,
-      isAuctionHouse: false,
+      isAuctionHouse: this.user.currentUser().username === 'sotheby' ? true : false,
     };
     this.handleLogin = this.handleLogin.bind(this);
   }
 
   handleLogin() {
-    if (this.state.isLoggedIn) {
-      this.user.logout();
-    }
+    this.state.isLoggedIn ? this.user.logout() : null;
     this.setState({
       isLoggedIn: !this.state.isLoggedIn,
     });
   }
 
-  handleViewChange(val) {
-    this.setState({
-      isAuctionHouse: val,
-    });
-  }
-
-  renderContent() {
-    const isLoggedIn = this.state.isLoggedIn;
-    const isAuctionHouse = this.state.isAuctionHouse;
+  render() {
+    let { isLoggedIn, isAuctionHouse } = this.state;
     if (!isLoggedIn) {
       return <Login handleLogin={this.handleLogin} />;
     }
-    if (isAuctionHouse) {
-      return (
-        <div>
-          <Navbar handleViewChange={this.handleViewChange.bind(this)} {...this.state} />
-          <ManageAuctions />
-          <Footer />
-        </div>
-      );
-    }
-    else {
-      return (
-        <div>
-          <Navbar handleViewChange={this.handleViewChange.bind(this)} handleLogin={this.handleLogin} {...this.state} />
-          <ArtworkGrid />
-          <Footer />
-        </div>
-      );
-    }
-  }
-
-  render() {
-    return this.renderContent();
+    return (
+      <div>
+        <Navbar handleLogin={this.handleLogin} {...this.state} />
+        { isAuctionHouse ? <ManageAuctions /> : <ArtworkGrid /> }
+        <Footer />
+      </div>
+    );
   }
 
 }
