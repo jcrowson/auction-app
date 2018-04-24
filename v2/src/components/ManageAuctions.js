@@ -79,7 +79,7 @@ const AuctionTableRow = function(props) {
   let {id, sellerID, status, buyItNowPrice, reservePrice, requestDate} = props;
   return (
     <tr>
-      <th scope="row">{id}</th>
+      <th scope="row">{id + 1}</th>
       <td>{sellerID}</td>
       <td><span className="badge badge-success">{status}</span></td>
       <td>${parseInt(reservePrice).toLocaleString()}</td>

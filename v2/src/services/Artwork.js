@@ -1,4 +1,4 @@
-import { CURRENT_USER, API_ENDPOINT, HEADERS } from './Constants.js';
+import { API_ENDPOINT, HEADERS } from './Constants.js';
 
 export default class Artwork {
 
@@ -36,7 +36,7 @@ export default class Artwork {
 
   getAuctionRequestsForCurrentAuctionHouse() {
     return new Promise(function (resolve, reject) {
-      fetch(API_ENDPOINT + '/auction/open', {
+      fetch(API_ENDPOINT + '/auction/init', {
         headers: HEADERS(),
         method: 'GET',
       }).then(response => response.json())
