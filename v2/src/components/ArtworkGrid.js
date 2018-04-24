@@ -81,7 +81,7 @@ class ArtworkGrid extends Component {
                 { openAuctions.length > 3 && <a className="float-right" href="#show" onClick={() => this.setState({isShowingAllOpenAuctions: !this.state.isShowingAllOpenAuctions})}>{ isShowingAllOpenAuctions ? 'Show less' : 'Show all'}</a> }
               </div>
             </div>
-            // { this.renderOpenAuctions() }
+            { this.renderOpenAuctions() }
             <hr />
             <div className="row mb-3 mt-5">
               <div className="col-md-6">

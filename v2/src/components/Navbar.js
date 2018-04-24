@@ -33,10 +33,6 @@ class Navbar extends Component {
         </a>
         <form className="form-inline">
           <div className="btn-toolbar">
-            <div className="form-check pl-4">
-              <input type="checkbox" className="form-check-input" id="exampleCheck1" onChange={this.changeView.bind(this)}/>
-              <label className="form-check-label text-muted" htmlFor="exampleCheck1">Switch View to <mark>Auction House</mark> (Demo Purposes)</label>
-            </div>
             {this.renderContent()}
           </div>
         </form>

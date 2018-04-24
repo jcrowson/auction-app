@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Login from './components/Login.js';
 import Navbar from './components/Navbar.js';
 import ArtworkGrid from './components/ArtworkGrid.js';
-import ManageArtworks from './components/ManageArtworks.js';
+import ManageAuctions from './components/ManageAuctions.js';
 import Footer from './components/Footer.js';
 
 import UserService from './services/Users.js';
@@ -44,7 +44,7 @@ class App extends Component {
       return (
         <div>
           <Navbar handleViewChange={this.handleViewChange.bind(this)} {...this.state} />
-          <ManageArtworks />
+          <ManageAuctions />
           <Footer />
         </div>
       );

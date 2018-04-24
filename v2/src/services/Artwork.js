@@ -34,6 +34,16 @@ export default class Artwork {
     });
   }
 
+  getAuctionRequestsForCurrentAuctionHouse() {
+    return new Promise(function (resolve, reject) {
+      fetch(API_ENDPOINT + '/auction/open', {
+        headers: HEADERS,
+        method: 'GET',
+      }).then(response => response.json())
+        .then(data => resolve(data));
+    });
+  }
+
   openAuctionForBids(auction) {
     return new Promise(function (resolve, reject) {
       fetch(API_ENDPOINT + '/auction/openAuction', {
