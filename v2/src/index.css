@@ -63,6 +63,28 @@ footer p {
   background: black;
 }
 
+.table {
+  border-collapse: separate;
+  border-spacing: 0 1.2rem;
+}
+
+tr.auction {
+  background: white;
+}
+
+.table td, .table th {
+  vertical-align: middle;
+  border: none;
+}
+
+td.artwork {
+  padding: 0;
+}
+
+td.artwork img {
+  object-fit: cover;
+}
+
 .spinner-wrapper {
   min-height: 300px;
 }

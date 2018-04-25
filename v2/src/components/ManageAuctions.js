@@ -37,6 +37,7 @@ class ManageAuctions extends Component {
       <table className="table">
         <thead>
           <tr>
+            <th scope="col">Artwork</th>
             <th scope="col">#</th>
             <th scope="col">Seller ID</th>
             <th scope="col">Status</th>
@@ -76,10 +77,11 @@ class ManageAuctions extends Component {
 }
 
 const AuctionTableRow = function(props) {
-  let {id, sellerID, status, buyItNowPrice, reservePrice, requestDate} = props;
+  let {id, sellerID, itemImage, status, buyItNowPrice, reservePrice, requestDate} = props;
   return (
-    <tr>
-      <th scope="row">{id + 1}</th>
+    <tr className="auction">
+      <td className="artwork"><img src={itemImage} width="100" height="100" /></td>
+      <td>{id + 1}</td>
       <td>{sellerID}</td>
       <td><span className={"badge badge-" + (status === 'INIT' ? 'info' : 'success')}>{status}</span></td>
       <td>${parseInt(reservePrice).toLocaleString()}</td>
