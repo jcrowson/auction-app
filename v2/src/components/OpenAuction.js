@@ -36,12 +36,10 @@ class OpenAuction extends Component {
     let auction = {...this.state.auction};
     auction.auctionStartDateTime = moment().format('YYYY-MM-DD hh:mm:ss');
     auction.auctionRequestID = this.props.auctionID;
-    console.log(this.props.auctionID);
-    console.log(auction);
     this.artwork.openAuctionForBids(auction).then((response) => {
       this.setState({ isLoading: false });
+      this.props.refreshAuctions();
       $('#openAuctionModal').modal('hide');
-      console.log(response);
     });
   }
 
