@@ -13,6 +13,7 @@ class ManageAuctions extends Component {
 
     this.state = {
       auctionRequests: [],
+      selectedAuction: {},
       isLoading: true,
     };
 
@@ -22,6 +23,7 @@ class ManageAuctions extends Component {
   componentDidMount() {
     this.artworkAPI.getAuctionRequestsForCurrentAuctionHouse().then((response => {
       this.setState({
+        selectedAuction: response[0],
         auctionRequests: response,
         isLoading: false,
       });
@@ -48,7 +50,7 @@ class ManageAuctions extends Component {
           </tr>
         </thead>
         <tbody>
-          { auctionRequests.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp)).map((auctionRequest, i) => <AuctionTableRow id={i} {...auctionRequest} key={i} />) }
+          { auctionRequests.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp)).map((auctionRequest, i) => <AuctionTableRow id={i} handleClick={(auctionId) => {this.setState({ selectedAuction: auctionRequests[auctionId] })}} {...auctionRequest} key={i} />) }
         </tbody>
       </table>
     );
@@ -69,7 +71,7 @@ class ManageAuctions extends Component {
             </div>
           </div>
         </main>
-        <OpenAuction />
+        <OpenAuction {...this.state.selectedAuction} />
       </div>
     );
   }
@@ -88,7 +90,7 @@ const AuctionTableRow = function(props) {
       <td>${parseInt(buyItNowPrice).toLocaleString()}</td>
       <td>{moment(requestDate, 'MMDDYYYY').format('MM-DD-YYYY')}</td>
       <td>
-        { status !== 'OPEN' && <button type="button" className="btn btn-primary btn-sm" data-toggle="modal" data-target=".open-auction-modal">Open Auction</button> }
+        { status !== 'OPEN' && <button type="button" className="btn btn-primary btn-sm" onClick={() => props.handleClick(id)} data-toggle="modal" data-target=".open-auction-modal">Open Auction</button> }
       </td>
     </tr>
   );

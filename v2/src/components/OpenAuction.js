@@ -27,14 +27,18 @@ class OpenAuction extends Component {
     const name = target.name;
     let auction = {...this.state.auction}
     auction[name] = value;
-    auction.auctionStartDateTime = moment().format('YYYY-MM-DD hh:mm:ss');
     this.setState({ auction });
   }
 
   handleSubmit(event) {
     event.preventDefault();
     this.setState({ isLoading: true });
-    this.artwork.openAuctionForBids(this.state.auction).then((response) => {
+    let auction = {...this.state.auction};
+    auction.auctionStartDateTime = moment().format('YYYY-MM-DD hh:mm:ss');
+    auction.auctionRequestID = this.props.auctionID;
+    console.log(this.props.auctionID);
+    console.log(auction);
+    this.artwork.openAuctionForBids(auction).then((response) => {
       this.setState({ isLoading: false });
       $('#openAuctionModal').modal('hide');
       console.log(response);

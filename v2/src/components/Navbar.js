@@ -15,7 +15,7 @@ class Navbar extends Component {
       );
     }
     return (
-      <button className="btn btn-outline-primary btn-sm ml-sm-2" type="button" onClick={this.props.handleLogin}>Sign Out</button>
+      <button className="btn btn-outline-primary btn-sm mr-2" type="button" onClick={this.props.handleLogin}>Sign Out</button>
     );
   }
 
