@@ -28,7 +28,7 @@ class Navbar extends Component {
       <nav className="navbar navbar-light">
         <a className="navbar-brand">
           <img src={logo} width="146" height="40" alt="" />
-          <img src={fabricLogo} alt="" width="200" />
+          <img src={fabricLogo} alt="" width="140" />
         </a>
         <form className="form-inline">
           <div className="btn-toolbar">

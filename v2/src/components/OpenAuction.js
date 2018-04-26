@@ -52,7 +52,7 @@ class OpenAuction extends Component {
         <div className="col-md-12">
           <form onSubmit={this.handleSubmit}>
             <div className="form-group">
-              <label htmlFor="duration">Duration</label>
+              <label htmlFor="duration">Duration (Minutes)</label>
               <input type="number" className="form-control" name="duration" onChange={this.handleChange} required />
               <small className="form-text text-muted">Enter the auction duration in minutes.</small>
             </div>

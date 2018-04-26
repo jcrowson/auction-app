@@ -88,7 +88,7 @@ class SubmitArtworkAuction extends Component {
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title">Submit {itemDetail} for Auction</h5>
+              <h5 className="modal-title">Submit &quot;{itemDetail}&quot; for Auction</h5>
               <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>

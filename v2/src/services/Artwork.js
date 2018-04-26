@@ -55,7 +55,7 @@ export default class Artwork {
     });
   }
 
-  getOpenAuctionsForCurrentAuctionHouse() {
+  getOpenAuctions() {
     return new Promise(function (resolve, reject) {
       fetch(API_ENDPOINT + '/auction/open', {
         headers: HEADERS(),
@@ -71,6 +71,17 @@ export default class Artwork {
         headers: HEADERS(),
         method: 'POST',
         body: JSON.stringify(bid),
+      }).then(response => response.json())
+        .then(data => resolve(data));
+    });
+  }
+
+  transferArtworkToUser(transfer) {
+    return new Promise(function (resolve, reject) {
+      fetch(API_ENDPOINT + 'post', {
+        headers: HEADERS(),
+        method: 'POST',
+        body: JSON.stringify(transfer),
       }).then(response => response.json())
         .then(data => resolve(data));
     });

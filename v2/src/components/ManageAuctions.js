@@ -42,7 +42,7 @@ class ManageAuctions extends Component {
         isLoadingAuctionRequests: false,
       });
     }));
-    this.artworkAPI.getOpenAuctionsForCurrentAuctionHouse().then((response => {
+    this.artworkAPI.getOpenAuctions().then((response => {
       this.setState({
         openAuctions: response,
         isLoadingOpenAuctions: false,

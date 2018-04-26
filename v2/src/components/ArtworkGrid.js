@@ -6,6 +6,7 @@ import ArtworkCard from './ArtworkCard.js';
 import ArtworkDetail from './ArtworkDetail.js';
 import NewArtwork from './NewArtwork.js';
 import SubmitArtworkAuction from './SubmitArtworkAuction.js';
+import TransferArtwork from './TransferArtwork.js';
 import Spinner from './Spinner.js';
 
 import ArtworkAPI from '../services/Artwork.js';
@@ -17,7 +18,8 @@ class ArtworkGrid extends Component {
     this.state = {
       selectedArtwork: {},
       isBidding: false,
-      isLoading: true,
+      isLoadingYourArtwork: true,
+      isLoadingOpenAuctions: true,
       isShowingAllOpenAuctions: false,
       yourArtwork: [],
       openAuctions: [],
@@ -31,9 +33,10 @@ class ArtworkGrid extends Component {
   componentDidMount() {
     this.artworkAPI.getArtworkForCurrentUser().then(response => {
       this.setState({
-        selectedArtwork: response[0],
         yourArtwork: response,
-        isLoading: false,
+        selectedArtwork: response[0],
+        isLoadingOpenAuctions: false,
+        isLoadingYourArtwork: false,
       });
     });
   }
@@ -45,8 +48,8 @@ class ArtworkGrid extends Component {
   }
 
   renderYourArtwork() {
-    let {isLoading, yourArtwork} = this.state;
-    if (isLoading) {
+    let {isLoadingYourArtwork, yourArtwork} = this.state;
+    if (isLoadingYourArtwork) {
       return <Spinner />;
     }
     return (
@@ -57,14 +60,14 @@ class ArtworkGrid extends Component {
   }
 
   renderOpenAuctions() {
-    let {isLoading, openAuctions, isShowingAllOpenAuctions} = this.state;
-    if (isLoading) {
+    let {isLoadingOpenAuctions, openAuctions, isShowingAllOpenAuctions} = this.state;
+    if (isLoadingOpenAuctions) {
       return <Spinner />;
     }
     return (
       <div className="row">
         { openAuctions.length === 0 && <img className="mb-4 mx-auto" src={emptyAuctions} alt="Empty Auction" /> }
-        { openAuctions.length > 0 && openAuctions.slice(0, isShowingAllOpenAuctions ? openAuctions.count : 3).map((art, i) => <ArtworkCard isAuction handleClick={(artworkIndex) => this.setState({ selectedArtwork: openAuctions[artworkIndex], isBidding: true })} id={i} {...art} key={i} />) }
+        { openAuctions.length > 0 && openAuctions.slice(0, isShowingAllOpenAuctions ? openAuctions.count : 3).map((auction, i) => <ArtworkCard isAuction handleClick={(artworkIndex) => this.setState({ selectedArtwork: openAuctions[artworkIndex], isBidding: true })} id={i} {...auction} key={i} />) }
       </div>
     );
   }
@@ -97,6 +100,7 @@ class ArtworkGrid extends Component {
             <ArtworkDetail isAuction={isBidding} {...selectedArtwork} />
             <NewArtwork addArtwork={this.addArtworkToState} />
             <SubmitArtworkAuction {...selectedArtwork} />
+            <TransferArtwork {...selectedArtwork} />
           </div>
         </div>
       </main>

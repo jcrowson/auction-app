@@ -28,7 +28,10 @@ class ArtworkDetail extends Component {
                     <img className="img-stretch artwork-detail" src={itemImage} alt='Artwork' />
                   </div>
                   <div className="col-md-12 mt-4">
-                    <h2>{itemDetail}</h2>
+                    <h3>{itemDetail}</h3>
+                  </div>
+                  <div className="col-md-12">
+                    <p><strong>${parseInt(itemBasePrice).toLocaleString()}</strong></p>
                   </div>
                   <div className="col-md-12">
                     <span className="badge badge-primary">{itemSubject}</span>
@@ -36,9 +39,10 @@ class ArtworkDetail extends Component {
                     <span className="badge badge-info ml-2">{itemMedia}</span>
                     <br />
                     <span><em>{itemSize}</em></span>
-                    <span className="ml-2 mt-2">Created: {itemDate}</span>
+                    <br />
+                    <span className="mt-2">Created: {itemDate}</span>
+                    <hr />
                     <p className="mt-2">{itemDescription}</p>
-                    <p><strong>Base price: ${parseInt(itemBasePrice).toLocaleString()}</strong></p>
                   </div>
                   { isAuction && <BiddingArea /> }
                 </div>

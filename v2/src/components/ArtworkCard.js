@@ -49,6 +49,7 @@ class ArtworkCard extends Component {
               <div className="btn-group">
                 <button onClick={() => this.props.handleClick(id)} type="button" className="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target=".art-detail-modal">{ isAuction ? 'Bid' : 'View' }</button>
                 {!isAuction && <button onClick={() => this.props.handleClick(id)} type="button" className="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target=".submit-artwork-auction-modal">Submit for Auction</button>}
+                {!isAuction && <button onClick={() => this.props.handleClick(id)} type="button" className="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target=".transfer-artwork-modal">Transfer</button>}
               </div>
               {isAuction && <span className="badge badge-pill badge-info">{this.state.timeLeft}</span>}
             </div>

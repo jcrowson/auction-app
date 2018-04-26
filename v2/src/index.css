@@ -54,11 +54,12 @@ footer p {
 
 .artwork-card:hover {
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  transform: translate(0, -5px);
 }
 
 .art-detail-modal img {
-  max-height: 300px;
-  min-height: 300px;
+  max-height: 450px;
+  min-height: 450px;
   object-fit: contain;
   background: black;
 }
