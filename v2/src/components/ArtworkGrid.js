@@ -28,6 +28,7 @@ class ArtworkGrid extends Component {
     this.artworkAPI = new ArtworkAPI();
 
     this.addArtworkToState = this.addArtworkToState.bind(this);
+    this.updateArtworkStatus = this.updateArtworkStatus.bind(this);
   }
 
   componentDidMount() {
@@ -44,6 +45,15 @@ class ArtworkGrid extends Component {
   addArtworkToState(newArtwork) {
     let yourArtwork = this.state.yourArtwork;
     yourArtwork.push(newArtwork);
+    this.setState({ yourArtwork });
+  }
+
+  updateArtworkStatus() {
+    let artworkToUpdate = this.state.selectedArtwork;
+    artworkToUpdate.itemStatus = 'READYFORAUC';
+    let indexOfArtworkToUpdate = this.state.yourArtwork.findIndex((artwork) => artwork.itemID === artworkToUpdate.itemID);
+    let yourArtwork = this.state.yourArtwork;
+    yourArtwork[indexOfArtworkToUpdate] = artworkToUpdate;
     this.setState({ yourArtwork });
   }
 
@@ -99,7 +109,7 @@ class ArtworkGrid extends Component {
             { this.renderYourArtwork() }
             <ArtworkDetail isAuction={isBidding} {...selectedArtwork} />
             <NewArtwork addArtwork={this.addArtworkToState} />
-            <SubmitArtworkAuction {...selectedArtwork} />
+            <SubmitArtworkAuction updateArtwork={this.updateArtworkStatus} {...selectedArtwork} />
             <TransferArtwork {...selectedArtwork} />
           </div>
         </div>

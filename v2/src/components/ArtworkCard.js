@@ -36,7 +36,7 @@ class ArtworkCard extends Component {
   }
 
   render() {
-    let {id, itemDetail, itemDescription, itemImage, itemDate, itemBasePrice, itemSize, itemSubject, itemType, itemMedia, isAuction} = this.props;
+    let {id, itemDetail, itemDescription, itemImage, itemDate, itemStatus, itemBasePrice, itemSize, itemSubject, itemType, itemMedia, isAuction} = this.props;
     return (
       <div className="col-md-4">
         <div className="card artwork-card mb-4 box-shadow">
@@ -48,9 +48,10 @@ class ArtworkCard extends Component {
             <div className="d-flex justify-content-between align-items-center">
               <div className="btn-group">
                 <button onClick={() => this.props.handleClick(id)} type="button" className="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target=".art-detail-modal">{ isAuction ? 'Bid' : 'View' }</button>
-                {!isAuction && <button onClick={() => this.props.handleClick(id)} type="button" className="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target=".submit-artwork-auction-modal">Submit for Auction</button>}
-                {!isAuction && <button onClick={() => this.props.handleClick(id)} type="button" className="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target=".transfer-artwork-modal">Transfer</button>}
+                {!isAuction && itemStatus === 'INITIAL' && <button onClick={() => this.props.handleClick(id)} type="button" className="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target=".submit-artwork-auction-modal">Submit for Auction</button>}
+                {!isAuction && itemStatus === 'INITIAL' && <button onClick={() => this.props.handleClick(id)} type="button" className="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target=".transfer-artwork-modal">Transfer</button>}
               </div>
+              {itemStatus === 'READYFORAUC' && <span className="badge badge-info">At Auction</span>}
               {isAuction && <span className="badge badge-pill badge-info">{this.state.timeLeft}</span>}
             </div>
           </div>

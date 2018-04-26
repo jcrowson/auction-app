@@ -46,6 +46,7 @@ class SubmitArtworkAuction extends Component {
     this.artwork.createAuctionRequest(auctionRequest).then((response) => {
       this.setState({ isLoading: false });
       $('#submitArtworkModal').modal('hide');
+      this.props.updateArtwork();
     });
   }
 
@@ -56,7 +57,7 @@ class SubmitArtworkAuction extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <div className="alert alert-primary" role="alert">
-          You are submitting to Sotheby's, London Auction House.
+          You are submitting to the Sotheby's London Auction House.
         </div>
         <div className="mb-3">
           <label htmlFor="buytItNowPrice">Buy-It-Now Price</label>
