@@ -14,7 +14,7 @@ export default class Artwork {
 
   createArtwork(newArtwork) {
     return new Promise(function (resolve, reject) {
-      fetch(API_ENDPOINT + '/item/createItem', {
+      fetch(API_ENDPOINT + '/item/create', {
         headers: HEADERS(),
         method: 'POST',
         body: JSON.stringify(newArtwork),
@@ -25,7 +25,7 @@ export default class Artwork {
 
   createAuctionRequest(auctionRequest) {
     return new Promise(function (resolve, reject) {
-      fetch(API_ENDPOINT + '/auction/initAuction', {
+      fetch(API_ENDPOINT + '/auction/init', {
         headers: HEADERS(),
         method: 'POST',
         body: JSON.stringify(auctionRequest),
@@ -46,7 +46,7 @@ export default class Artwork {
 
   openAuctionForBids(auction) {
     return new Promise(function (resolve, reject) {
-      fetch(API_ENDPOINT + '/auction/openAuction', {
+      fetch(API_ENDPOINT + '/auction/open', {
         headers: HEADERS(),
         method: 'POST',
         body: JSON.stringify(auction),

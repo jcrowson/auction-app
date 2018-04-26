@@ -16,7 +16,7 @@ export default class Users {
 
   createNewUser(user) {
     return new Promise(function (resolve, reject) {
-      fetch(API_ENDPOINT + '/user/createUser', {
+      fetch(API_ENDPOINT + '/user/create', {
         headers: HEADERS(),
         method: 'POST',
         body: JSON.stringify(user),
