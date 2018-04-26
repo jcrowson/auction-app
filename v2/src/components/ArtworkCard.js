@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 
+import { API_ENDPOINT } from '../services/Constants.js';
+
 class ArtworkCard extends Component {
 
   constructor(props) {
@@ -36,11 +38,11 @@ class ArtworkCard extends Component {
   }
 
   render() {
-    let {id, itemDetail, itemDescription, itemImage, itemDate, itemStatus, itemBasePrice, itemSize, itemSubject, itemType, itemMedia, isAuction} = this.props;
+    let {id, itemDetail, itemDescription, itemImageName, itemDate, itemStatus, itemBasePrice, itemSize, itemSubject, itemType, itemMedia, isAuction} = this.props;
     return (
       <div className="col-md-4">
         <div className="card artwork-card mb-4 box-shadow">
-          <img className="card-img-top" src={itemImage} alt='Artwork' />
+          <img className="card-img-top" src={`${API_ENDPOINT}/images/${itemImageName}`} alt='Artwork' />
           <div className="card-body">
             <h5 className="card-title">{itemDetail}</h5>
             <p className="card-text text-muted">{itemDescription.substring(0, 100)}...</p>

@@ -3,8 +3,10 @@ import moment from 'moment';
 
 import OpenAuction from './OpenAuction.js';
 import Spinner from './Spinner.js';
+import CountdownTimer from './CountdownTimer.js';
 
 import ArtworkAPI from '../services/Artwork.js';
+import { API_ENDPOINT } from '../services/Constants.js';
 
 class ManageAuctions extends Component {
 
@@ -86,7 +88,7 @@ class ManageAuctions extends Component {
                     <th scope="col">Status</th>
                     <th scope="col">Reserve Price</th>
                     <th scope="col">Buy-It-Now Price</th>
-                    <th scope="col">Request Date</th>
+                    <th scope="col">Request Date / Timeleft</th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
@@ -106,7 +108,7 @@ class ManageAuctions extends Component {
 }
 
 const AuctionTableRow = function(props) {
-  let {id, sellerID, itemImage, status, buyItNowPrice, reservePrice, requestDate} = props;
+  let {id, sellerID, itemImageName, status, buyItNowPrice, reservePrice, requestDate, closeDate} = props;
   if (!sellerID) {
     return (
       <tr className="auction">
@@ -123,13 +125,16 @@ const AuctionTableRow = function(props) {
   }
   return (
     <tr className="auction">
-      <td className="artwork"><img src={itemImage} width="100" height="100" /></td>
+      <td className="artwork"><img src={`${API_ENDPOINT}/images/${itemImageName}`} width="100" height="100" /></td>
       <td>{id + 1}</td>
       <td>{sellerID}</td>
       <td><span className={"badge badge-" + (status === 'INIT' ? 'info' : 'success')}>{status === 'INIT' ? 'Request' : 'Open'}</span></td>
       <td>${parseInt(reservePrice).toLocaleString()}</td>
       <td>${parseInt(buyItNowPrice).toLocaleString()}</td>
-      <td>{moment(requestDate, 'MMDDYYYY').format('MM-DD-YYYY')}</td>
+      <td>
+        { status !== 'OPEN' && moment(requestDate, 'MMDDYYYY').format('MM-DD-YYYY') }
+        { status === 'OPEN' && <CountdownTimer endDate={closeDate}/> }
+      </td>
       <td>
         { status !== 'OPEN' && <button type="button" className="btn btn-primary btn-sm" onClick={() => props.handleClick(id)} data-toggle="modal" data-target=".open-auction-modal">Open Auction</button> }
       </td>

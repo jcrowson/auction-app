@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import { API_ENDPOINT } from '../services/Constants.js';
+
 class ArtworkDetail extends Component {
 
   constructor(props) {
@@ -7,7 +9,7 @@ class ArtworkDetail extends Component {
   }
 
   render() {
-    let {isAuction, itemDetail, itemDescription, itemImage, itemDate, itemBasePrice, itemSize, itemSubject, itemType, itemMedia} = this.props;
+    let {isAuction, itemDetail, itemDescription, itemImageName, itemDate, itemBasePrice, itemSize, itemSubject, itemType, itemMedia} = this.props;
     if (!itemDetail) {
       return null;
     }
@@ -25,7 +27,7 @@ class ArtworkDetail extends Component {
               <div className="container-fluid">
                 <div className="row">
                   <div className="col-md-12">
-                    <img className="img-stretch artwork-detail" src={itemImage} alt='Artwork' />
+                    <img className="img-stretch artwork-detail" src={`${API_ENDPOINT}/images/${itemImageName}`} alt='Artwork' />
                   </div>
                   <div className="col-md-12 mt-4">
                     <h3>{itemDetail}</h3>
