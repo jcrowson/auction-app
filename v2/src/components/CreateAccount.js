@@ -33,11 +33,10 @@ class CreateAccount extends Component {
       user: {
         ...this.state.user,
         userType: "TRD",
-        timeStamp: new Date(),
       },
       isLoading: true,
     }, () => {
-      let user = { user: this.state.user };
+      let user = this.state.user;
       this.usersAPI.createNewUser(user).then((res) => {
         this.setState({ isLoading: false });
         this.props.handleViewChange();
