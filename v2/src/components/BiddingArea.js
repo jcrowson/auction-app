@@ -1,8 +1,22 @@
-import React, { Component } from 'react';
-import moment from 'moment';
-import $ from 'jquery';
+/**
+ * Copyright 2018 IT People Corporation. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the 'License');
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an 'AS IS' BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ * Author: James Crowson <james.crowson@itpeoplecorp.com>
+ */
 
-import CountdownTimer from './CountdownTimer.js';
+import React, { Component } from 'react';
 
 import AuctionsAPI from '../services/Auctions.js';
 
@@ -18,7 +32,7 @@ class BiddingArea extends Component {
       isMakingBid: false,
       isBuyingNow: false,
     };
-    this.auctionAPI = new AuctionsAPI;
+    this.auctions = new AuctionsAPI();
     this.handleMakeBid = this.handleMakeBid.bind(this);
     this.handleBuyNow = this.handleBuyNow.bind(this);
   }
@@ -30,7 +44,7 @@ class BiddingArea extends Component {
   }
 
   getHighestBid() {
-    this.auctionAPI.getHighestBidForAuctionWithId(this.props.auctionId).then(response => {
+    this.auctions.getHighestBidForAuctionWithId(this.props.auctionId).then(response => {
       this.setState({
         highestBid: response.bidPrice,
       });
@@ -44,7 +58,7 @@ class BiddingArea extends Component {
       bidPrice: this.state.bidPrice,
       auctionID: this.props.auctionId,
     };
-    this.auctionAPI.makeBid(bid).then(response => {
+    this.auctions.makeBid(bid).then(response => {
       if (response.message) {
         this.setState({
           message: response.message,
@@ -68,7 +82,7 @@ class BiddingArea extends Component {
       bidPrice: this.props.buyItNowPrice,
       auctionID: this.props.auctionId,
     };
-    this.auctionAPI.buyNow(bid).then(response => {
+    this.auctions.buyNow(bid).then(response => {
       if (!response.message.includes('successfully')) {
         this.setState({
           message: response.message,
@@ -87,10 +101,10 @@ class BiddingArea extends Component {
         <div className="row">
           <div className="col-md-6">
             <div className="jumbotron">
-              <p><small>Current bid: </small><strong>US ${parseInt(highestBid).toLocaleString()}</strong></p>
+              <p><small>Current bid: </small><strong>US ${parseInt(highestBid, 10).toLocaleString()}</strong></p>
               <form onSubmit={this.handleMakeBid}>
                 <div className="form-group">
-                  <label htmlFor="bidPrice">Enter ${parseInt(highestBid).toLocaleString()} or more</label>
+                  <label htmlFor="bidPrice">Enter ${parseInt(highestBid, 10).toLocaleString()} or more</label>
                   <div className="input-group">
                     <div className="input-group-prepend">
                       <div className="input-group-text">$</div>
@@ -104,7 +118,7 @@ class BiddingArea extends Component {
           </div>
           <div className="col-md-6">
             <div className="jumbotron">
-              <p><small>Price: </small><strong>${parseInt(this.props.buyItNowPrice).toLocaleString()}</strong></p>
+              <p><small>Price: </small><strong>${parseInt(this.props.buyItNowPrice, 10).toLocaleString()}</strong></p>
               <form onSubmit={this.handleBuyNow}>
                 <button type="submit" className="btn btn-danger" disabled={this.state.isBuyingNow}>Buy It Now</button>
               </form>

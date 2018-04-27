@@ -1,6 +1,22 @@
+/**
+ * Copyright 2018 IT People Corporation. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the 'License');
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an 'AS IS' BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ * Author: James Crowson <james.crowson@itpeoplecorp.com>
+ */
+
 import React, { Component } from 'react';
-import moment from 'moment';
-import logo from '../assets/logo.svg';
 
 import CountdownTimer from './CountdownTimer.js';
 
@@ -15,7 +31,7 @@ class ArtworkCard extends Component {
   }
   render() {
     let { isAuctionClosed } = this.state;
-    let { id, itemDetail, itemDescription, itemImageName, itemDate, itemStatus, itemBasePrice, itemSize, itemSubject, itemType, itemMedia, isAuction, buyItNowPrice, reservePrice, closeDate } = this.props;
+    let { id, itemDetail, itemDescription, itemImageName, itemStatus, isAuction, buyItNowPrice, closeDate } = this.props;
     return (
       <div className="col-md-4">
         <div className={"card artwork-card mb-4 " + (isAuctionClosed ? 'artwork-card-disabled' : '')}>
@@ -24,7 +40,7 @@ class ArtworkCard extends Component {
           <div className="card-body">
             <h5 className="card-title">{itemDetail}</h5>
             <p className="card-text text-muted">{itemDescription && `${itemDescription.substring(0, 100)}...`}</p>
-            {isAuction && <p><small>Buy It Now: </small><strong>${parseInt(buyItNowPrice).toLocaleString()}</strong></p>}
+            {isAuction && <p><small>Buy It Now: </small><strong>${parseInt(buyItNowPrice, 10).toLocaleString()}</strong></p>}
             <div className="d-flex justify-content-between align-items-center">
               <button onClick={() => this.props.handleClick(id)} type="button" className={"btn btn-sm btn-outline-" + (isAuction ? 'danger' : 'secondary')} data-toggle="modal" data-target=".art-detail-modal">{ isAuction ? 'Bid' : 'View' }</button>
               <div className="btn-group">
