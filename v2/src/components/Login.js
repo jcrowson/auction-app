@@ -20,6 +20,7 @@ class Login extends Component {
       },
       isCreatingAccount: false,
       isLoading: false,
+      message: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -40,8 +41,14 @@ class Login extends Component {
     event.preventDefault();
     this.setState({ isLoading: true });
     this.user.login(this.state.user).then((response) => {
-      this.props.handleLogin();
-      this.setState({ isLoading: false });
+      if (response.message) {
+        this.setState({
+          message: response.message,
+          isLoading: false,
+        });
+      } else {
+        this.props.handleLogin();
+      }
     }).catch(err => {
       alert(err);
       this.setState({ isLoading: false });
@@ -80,6 +87,7 @@ class Login extends Component {
         <input type="text" className="form-control" name="username" placeholder="Username" onChange={this.handleChange} required autoFocus />
         <input type="password" className="form-control mt-2" name="password" placeholder="Password" onChange={this.handleChange} required />
         <button className="btn btn-primary btn-block my-4" type="submit">Sign in</button>
+        { this.state.message &&<div className="alert alert-primary my-4" role="alert">{ this.state.message }</div> }
         <a href="#createNewAccount" onClick={this.handleViewChange}>Create a New Account</a>
         <img className="mt-4" src={fabricLogo} alt="" width="200" />
       </div>
