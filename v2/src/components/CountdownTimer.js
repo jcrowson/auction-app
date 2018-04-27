@@ -14,16 +14,20 @@ class CountdownTimer extends Component {
   }
 
   countDownAuction() {
-    let isCloseDateInPast = moment(this.props.endDate, "YYYY-MM-DD HH:mm:ss").isBefore(new Date());
-    if (isCloseDateInPast && !this.state.isAuctionClosed) {
+    let { auctionId, endDate, handleCloseAuction } = this.props;
+    let { isAuctionClosed } = this.state;
+    let isCloseDateInPast = moment(endDate, "YYYY-MM-DD HH:mm:ss").isBefore(new Date());
+    if (isCloseDateInPast && !isAuctionClosed) {
       this.setState({
         timeleft: '00:00',
         isAuctionClosed: true,
       });
-      this.props.handleCloseAuction(this.props.auctionId);
+      if (handleCloseAuction) {
+        handleCloseAuction(auctionId);
+      }
     }
-    else if (!this.state.isAuctionClosed) {
-      let timer = moment.utc(moment(this.props.endDate, "YYYY-MM-DD HH:mm:ss").diff(moment())).format("mm:ss");
+    else if (!isAuctionClosed) {
+      let timer = moment.utc(moment(endDate, "YYYY-MM-DD HH:mm:ss").diff(moment())).format("mm:ss");
       this.setState({ timeleft: timer });
     }
   }

@@ -13,8 +13,6 @@ footer p {
   margin-bottom: .25rem;
 }
 
-.box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
-
 .img-stretch { width: 100% }
 
 .jumbotron {
@@ -48,6 +46,11 @@ footer p {
 
 .artwork-card h1 {
   font-size: 1.3rem;
+}
+
+.artwork-card-disabled {
+  opacity: .5;
+  pointer-events: none;
 }
 
 .card-img-top {

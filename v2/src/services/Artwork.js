@@ -33,12 +33,12 @@ export default class Artwork {
     });
   }
 
-  transferArtworkToUser(transfer) {
+  transferArtworkToUser(artwork) {
     return new Promise(function (resolve, reject) {
-      fetch(API_ENDPOINT + 'post', {
+      fetch(API_ENDPOINT + '/item/transfer', {
         headers: HEADERS(),
         method: 'POST',
-        body: JSON.stringify(transfer),
+        body: JSON.stringify(artwork),
       }).then(response => response.json())
         .then(data => resolve(data));
     });

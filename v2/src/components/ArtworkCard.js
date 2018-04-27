@@ -6,11 +6,18 @@ import CountdownTimer from './CountdownTimer.js';
 import { API_ENDPOINT } from '../services/Constants.js';
 
 class ArtworkCard extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isAuctionClosed: false,
+    };
+  }
   render() {
-    let {id, itemDetail, itemDescription, itemImageName, itemDate, itemStatus, itemBasePrice, itemSize, itemSubject, itemType, itemMedia, isAuction, buyItNowPrice, reservePrice, closeDate} = this.props;
+    let { isAuctionClosed } = this.state;
+    let { id, itemDetail, itemDescription, itemImageName, itemDate, itemStatus, itemBasePrice, itemSize, itemSubject, itemType, itemMedia, isAuction, buyItNowPrice, reservePrice, closeDate } = this.props;
     return (
       <div className="col-md-4">
-        <div className="card artwork-card mb-4 box-shadow">
+        <div className={"card artwork-card mb-4 " + (isAuctionClosed ? 'artwork-card-disabled' : '')}>
           <img className="card-img-top" src={`${API_ENDPOINT}/images/${itemImageName}`} alt='Artwork' />
           <div className="card-body">
             <h5 className="card-title">{itemDetail}</h5>
@@ -23,7 +30,8 @@ class ArtworkCard extends Component {
                 {!isAuction && itemStatus === 'INITIAL' && <button onClick={() => this.props.handleClick(id)} type="button" className="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target=".transfer-artwork-modal">Transfer</button>}
               </div>
               {itemStatus === 'READYFORAUC' && <span className="badge badge-info">At Auction</span>}
-              {isAuction && <h1><CountdownTimer endDate={closeDate} /></h1>}
+              {isAuction && !isAuctionClosed && <h1><CountdownTimer endDate={closeDate} handleCloseAuction={() => this.setState({ isAuctionClosed: true })} /></h1>}
+              {isAuction && isAuctionClosed && <span className="badge badge-danger">CLOSED</span>}
             </div>
           </div>
         </div>

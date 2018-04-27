@@ -4,18 +4,18 @@ import $ from 'jquery';
 import Spinner from './Spinner.js';
 
 import ArtworkService from '../services/Artwork.js';
+import UtilsService from '../services/Utils.js';
+import { API_ENDPOINT } from '../services/Constants.js';
 
 class TransferArtwork extends Component {
-
   constructor(props) {
     super(props);
-
-    this.artwork = new ArtworkService();
-
     this.state = {
+      transfereeUsername: '',
       isLoading: false,
     };
-
+    this.artwork = new ArtworkService();
+    this.utils = new UtilsService();
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -23,19 +23,27 @@ class TransferArtwork extends Component {
   handleChange(event) {
     const target = event.target;
     const value = target.value;
-    const name = target.name;
-    let transfer = {...this.state.transfer};
-    transfer[name] = value;
-    this.setState({ transfer });
+    this.setState({ transfereeUsername: value });
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    let transfer = {...this.state.transfer };
     this.setState({ isLoading: true });
-    this.artwork.transferArtworkToUser(transfer).then((response) => {
-      this.setState({ isLoading: false });
-      $('#transferArtworkModal').modal('hide');
+    fetch(`http://localhost:3001/images/${this.props.itemImageName}`)
+    .then(res => res.blob()) // Gets the response and returns it as a blob
+    .then(blob => {
+      this.utils.getBase64(blob, (result) => {
+        let transfer = {
+          itemID: this.props.itemID,
+          ownerAESKey: this.props.aesKey,
+          transferee: this.state.transfereeUsername,
+          itemImage: result,
+        };
+        this.artwork.transferArtworkToUser(transfer).then((response) => {
+          this.setState({ isLoading: false });
+          $('#transferArtworkModal').modal('hide');
+        });
+      });
     });
   }
 
@@ -50,7 +58,7 @@ class TransferArtwork extends Component {
         </div>
         <div className="mb-3">
           <label htmlFor="reservePrice">Transferee Username</label>
-          <input className="form-control" type="text" name="username" onChange={this.handleChange} required />
+          <input className="form-control" type="text" name="transfereeUsername" value={this.state.transfereeUsername} onChange={this.handleChange} required />
         </div>
         <button type="submit" className="btn btn-primary mt-2">Transfer Artwork</button>
       </form>
