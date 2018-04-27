@@ -5,7 +5,6 @@ import BiddingArea from './BiddingArea.js';
 import Spinner from './Spinner.js';
 
 import ArtworkAPI from '../services/Artwork.js';
-import AuctionAPI from '../services/Auctions.js';
 import { API_ENDPOINT } from '../services/Constants.js';
 
 class ArtworkDetail extends Component {
@@ -17,16 +16,14 @@ class ArtworkDetail extends Component {
       isLoading: true,
       isAuctionClosed: false,
     };
-    this.artworkAPI = new ArtworkAPI();
-    this.auctionAPI = new AuctionAPI();
-
+    this.artwork = new ArtworkAPI();
     this.handleCloseAuction = this.handleCloseAuction.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.isVisible) {
       this.setState({ isLoading: true });
-      this.artworkAPI.getArtworkWithId(nextProps.itemID).then(response => {
+      this.artwork.getArtworkWithId(nextProps.itemID).then(response => {
         this.setState({
           artwork: response,
           isLoading: false,
@@ -75,6 +72,12 @@ class ArtworkDetail extends Component {
             <span className="mt-2">Created: {itemDate}</span>
             <hr />
             <p className="mt-2">{itemDescription}</p>
+            <hr />
+            <div className="row">
+              <div className="col-md-12">
+                <small className="text-muted aes">AES Key: {aesKey}</small>
+              </div>
+            </div>
           </div>
           { isAuction && <BiddingArea auctionId={auctionID} buyItNowPrice={buyItNowPrice} closeAuction={this.handleCloseAuction} /> }
         </div>

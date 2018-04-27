@@ -123,14 +123,14 @@ class ArtworkGrid extends Component {
                 <h5 className="text-muted">Your Artwork ({yourArtwork.length})</h5>
               </div>
               <div className="col-md-6">
-                <button className="btn btn-primary btn-sm float-right" type="button" data-toggle="modal" data-target=".new-artwork-modal">Add Artwork to Blockchain</button>
+                <button className="btn btn-primary btn-sm float-right" type="button" data-toggle="modal" data-target=".new-artwork-modal">Add Artwork</button>
               </div>
             </div>
             { this.renderYourArtwork() }
             <ArtworkDetail isVisible={this.state.isViewingArtwork} isAuction={isBidding} handleCloseAuction={() => { this.getAllOpenAuctions(); this.getYourArtwork(); }} {...selectedArtwork} />
             <NewArtwork addArtwork={this.addArtworkToState} />
             <SubmitArtworkAuction updateArtwork={this.updateArtworkStatus} {...selectedArtwork} />
-            <TransferArtwork {...selectedArtwork} />
+            <TransferArtwork handleTransfer={() => this.getYourArtwork()} {...selectedArtwork} />
           </div>
         </div>
       </main>

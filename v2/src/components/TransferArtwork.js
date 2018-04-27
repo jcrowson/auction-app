@@ -11,6 +11,7 @@ class TransferArtwork extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      artwork: {},
       transfereeUsername: '',
       isLoading: false,
     };
@@ -18,6 +19,18 @@ class TransferArtwork extends Component {
     this.utils = new UtilsService();
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.itemID) {
+      this.setState({ isLoading: true });
+      this.artwork.getArtworkWithId(nextProps.itemID).then(response => {
+        this.setState({
+          artwork: response,
+          isLoading: false,
+        });
+      });
+    }
   }
 
   handleChange(event) {
@@ -29,21 +42,16 @@ class TransferArtwork extends Component {
   handleSubmit(event) {
     event.preventDefault();
     this.setState({ isLoading: true });
-    fetch(`${API_ENDPOINT}/images/${this.props.itemImageName}`)
-    .then(res => res.blob())
-    .then(blob => {
-      this.utils.getBase64(blob, (result) => {
-        let transfer = {
-          itemID: this.props.itemID,
-          ownerAESKey: this.props.aesKey,
-          transferee: this.state.transfereeUsername,
-          itemImage: result,
-        };
-        this.artwork.transferArtworkToUser(transfer).then((response) => {
-          this.setState({ isLoading: false });
-          $('#transferArtworkModal').modal('hide');
-        });
-      });
+    let transfer = {
+      itemID: this.props.itemID,
+      ownerAESKey: this.props.aesKey,
+      transferee: this.state.transfereeUsername,
+      itemImage: this.state.artwork.itemImage,
+    };
+    this.artwork.transferArtworkToUser(transfer).then((response) => {
+      this.setState({ isLoading: false });
+      this.props.handleTransfer();
+      $('#transferArtworkModal').modal('hide');
     });
   }
 
