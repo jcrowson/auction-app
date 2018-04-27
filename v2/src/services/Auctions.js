@@ -65,6 +65,17 @@ export default class Auctions {
     });
   }
 
+  buyNow(bid) {
+    return new Promise(function (resolve, reject) {
+      fetch(API_ENDPOINT + '/bid/buyNow', {
+        headers: HEADERS(),
+        method: 'POST',
+        body: JSON.stringify(bid),
+      }).then(response => response.json())
+        .then(data => resolve(data));
+    });
+  }
+
   closeAuction(auction) {
     return new Promise(function (resolve, reject) {
       fetch(API_ENDPOINT + '/auction/close', {

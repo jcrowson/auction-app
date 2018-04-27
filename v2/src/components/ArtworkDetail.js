@@ -32,7 +32,7 @@ class ArtworkDetail extends Component {
   }
 
   renderContent() {
-    let { isAuction, auctionID } = this.props;
+    let { isAuction, auctionID, buyItNowPrice } = this.props;
     let { itemDetail, itemDescription, itemImageName, itemDate, itemBasePrice, itemSize, itemSubject, itemType, itemMedia } = this.state.artwork;
     if (this.state.isLoading) {
       return <Spinner />;
@@ -60,7 +60,7 @@ class ArtworkDetail extends Component {
             <hr />
             <p className="mt-2">{itemDescription}</p>
           </div>
-          { isAuction && <BiddingArea auctionId={auctionID} /> }
+          { isAuction && <BiddingArea auctionId={auctionID} buyItNowPrice={buyItNowPrice} /> }
         </div>
       </div>
     );
