@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import $ from 'jquery';
 
 import BiddingArea from './BiddingArea.js';
 import Spinner from './Spinner.js';
@@ -14,15 +15,18 @@ class ArtworkDetail extends Component {
     this.state = {
       artwork: {},
       isLoading: true,
+      isAuctionClosed: false,
     };
     this.artworkAPI = new ArtworkAPI();
     this.auctionAPI = new AuctionAPI();
+
+    this.handleCloseAuction = this.handleCloseAuction.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.isVisible) {
       this.setState({ isLoading: true });
-      this.artworkAPI.getArtworkWithId(nextProps.itemId).then(response => {
+      this.artworkAPI.getArtworkWithId(nextProps.itemID).then(response => {
         this.setState({
           artwork: response,
           isLoading: false,
@@ -31,18 +35,29 @@ class ArtworkDetail extends Component {
     }
   }
 
+  handleCloseAuction() {
+    console.log('closing auction');
+    this.setState({ isAuctionClosed: true });
+    setTimeout(() => {
+      this.props.handleCloseAuction();
+      $('#artworkDetailModal').modal('hide');
+    }, 2000);
+  }
+
   renderContent() {
-    let { isAuction, auctionId, buyItNowPrice } = this.props;
-    let { aesKey, itemDetail, itemDescription, itemImageName, itemDate, itemBasePrice, itemSize, itemSubject, itemType, itemMedia, itemImage } = this.state.artwork;
+    let { isAuction, auctionID, buyItNowPrice } = this.props;
+    let { aesKey, itemDetail, itemDescription, itemImageName, itemImage, itemDate, itemBasePrice, itemSize, itemSubject, itemType, itemMedia } = this.state.artwork;
     if (this.state.isLoading) {
       return <Spinner />;
     }
     return (
       <div className="container-fluid">
         <div className="row">
-          <div className="col-md-12">
+          <div className={"col-md-12 " + (this.state.isAuctionClosed ? 'closed' : '')}>
             { !aesKey && <div className="watermark watermark-full"></div> }
-            <img className="img-stretch artwork-detail" src={`${API_ENDPOINT}/images/${itemImageName}`} alt='Artwork' />
+            { isAuction && <div className="stamp"></div> }
+            { !aesKey && <img className="img-stretch artwork-detail" src={`${API_ENDPOINT}/images/${itemImageName}`} alt='Artwork' /> }
+            { aesKey && <img className="img-stretch artwork-detail" src={itemImage} alt='Artwork' /> }
           </div>
           <div className="col-md-12 mt-4">
             <h3>{itemDetail}</h3>
@@ -61,7 +76,7 @@ class ArtworkDetail extends Component {
             <hr />
             <p className="mt-2">{itemDescription}</p>
           </div>
-          { isAuction && <BiddingArea auctionId={auctionId} buyItNowPrice={buyItNowPrice} /> }
+          { isAuction && <BiddingArea auctionId={auctionID} buyItNowPrice={buyItNowPrice} closeAuction={this.handleCloseAuction} /> }
         </div>
       </div>
     );
@@ -69,7 +84,7 @@ class ArtworkDetail extends Component {
 
   render() {
     return (
-      <div className="modal fade art-detail-modal" tabIndex="-1" role="dialog" aria-labelledby="artDetail" aria-hidden="true">
+      <div id="artworkDetailModal" className="modal fade art-detail-modal" tabIndex="-1" role="dialog" aria-labelledby="artDetail" aria-hidden="true">
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-header">

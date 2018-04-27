@@ -143,3 +143,39 @@ td.artwork img {
 		transform: rotate(360deg);
 	}
 }
+
+.stamp {
+  position: absolute;
+  z-index: 999;
+  top: 45%;
+  left: 25%;
+  transform: rotate(-20deg);
+}
+
+.stamp:after {
+  border: solid 0.2em #fff;
+  color: #fff;
+  content: 'Closed';
+  font-size: 3.5rem;
+  font-weight: bold;
+  line-height: 1;
+  opacity: 0;
+  position: absolute;
+  width: 300px;
+  text-align: center;
+  padding: 40px 0;
+  margin: 0 auto;
+  text-transform: uppercase;
+  opacity: 0;
+  transform-origin: 50% 50%;
+  transform: rotate(-5deg) scale(5);
+  transition: all 0.3s cubic-bezier(0.6, 0.04, 0.98, 0.335);
+  mask-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/8399/grunge.png');
+  mask-size: 944px 604px;
+  mix-blend-mode: multiply;
+}
+.closed .stamp:after {
+  opacity: 0.75;
+  transform: rotate(0deg) scale(1);
+  z-index: -1;
+}

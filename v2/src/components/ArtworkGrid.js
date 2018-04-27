@@ -32,9 +32,17 @@ class ArtworkGrid extends Component {
 
     this.addArtworkToState = this.addArtworkToState.bind(this);
     this.updateArtworkStatus = this.updateArtworkStatus.bind(this);
+    this.getYourArtwork = this.getYourArtwork.bind(this);
+    this.getAllOpenAuctions = this.getAllOpenAuctions.bind(this);
   }
 
   componentDidMount() {
+    this.getAllOpenAuctions();
+    this.getYourArtwork();
+  }
+
+  getYourArtwork() {
+    this.setState({ isLoadingYourArtwork: true });
     this.artwork.getArtworkForCurrentUser().then(response => {
       this.setState({
         yourArtwork: response,
@@ -42,6 +50,10 @@ class ArtworkGrid extends Component {
         isLoadingYourArtwork: false,
       });
     });
+  }
+
+  getAllOpenAuctions() {
+    this.setState({ isLoadingOpenAuctions: true });
     this.auctions.getOpenAuctions().then(response => {
       this.setState({
         openAuctions: response,
@@ -115,7 +127,7 @@ class ArtworkGrid extends Component {
               </div>
             </div>
             { this.renderYourArtwork() }
-            <ArtworkDetail isVisible={this.state.isViewingArtwork} isAuction={isBidding} itemId={selectedArtwork.itemID} auctionId={selectedArtwork.auctionID} buyItNowPrice={selectedArtwork.buyItNowPrice} />
+            <ArtworkDetail isVisible={this.state.isViewingArtwork} isAuction={isBidding} handleCloseAuction={() => { this.getAllOpenAuctions(); this.getYourArtwork(); }} {...selectedArtwork} />
             <NewArtwork addArtwork={this.addArtworkToState} />
             <SubmitArtworkAuction updateArtwork={this.updateArtworkStatus} {...selectedArtwork} />
             <TransferArtwork {...selectedArtwork} />

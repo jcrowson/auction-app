@@ -15,6 +15,8 @@ class BiddingArea extends Component {
       bidPrice: '',
       message: '',
       interval: '',
+      isMakingBid: false,
+      isBuyingNow: false,
     };
     this.auctionAPI = new AuctionsAPI;
     this.handleMakeBid = this.handleMakeBid.bind(this);
@@ -37,18 +39,23 @@ class BiddingArea extends Component {
 
   handleMakeBid(event) {
     event.preventDefault();
+    this.setState({ isMakingBid: true });
     let bid = {
       bidPrice: this.state.bidPrice,
       auctionID: this.props.auctionId,
     };
     this.auctionAPI.makeBid(bid).then(response => {
       if (response.message) {
-        this.setState({ message: response.message });
+        this.setState({
+          message: response.message,
+          isMakingBid: false,
+        });
       } else {
         this.setState({
           message: '',
           bidPrice: '',
           highestBid: response.bidPrice,
+          isMakingBid: false,
          });
       }
     });
@@ -56,13 +63,19 @@ class BiddingArea extends Component {
 
   handleBuyNow(event) {
     event.preventDefault();
+    this.setState({ isBuyingNow: true });
     let bid = {
       bidPrice: this.props.buyItNowPrice,
       auctionID: this.props.auctionId,
     };
     this.auctionAPI.buyNow(bid).then(response => {
-      if (response.message) {
-        this.setState({ message: response.message });
+      if (!response.message.includes('successfully')) {
+        this.setState({
+          message: response.message,
+          isBuyingNow: false,
+        });
+      } else {
+        this.props.closeAuction();
       }
     });
   }
@@ -85,7 +98,7 @@ class BiddingArea extends Component {
                     <input type="number" className="form-control" placeholder="Bid Amount" min={highestBid} value={this.state.bidPrice} onChange={(e) => this.setState({ bidPrice: e.target.value })} required autoFocus />
                   </div>
                 </div>
-                <button type="submit" className="btn btn-primary">Place Bid</button>
+                <button type="submit" className="btn btn-primary" disabled={this.state.isMakingBid}>Make Bid</button>
               </form>
             </div>
           </div>
@@ -93,7 +106,7 @@ class BiddingArea extends Component {
             <div className="jumbotron">
               <p><small>Price: </small><strong>${parseInt(this.props.buyItNowPrice).toLocaleString()}</strong></p>
               <form onSubmit={this.handleBuyNow}>
-                <button type="submit" className="btn btn-danger">Buy It Now</button>
+                <button type="submit" className="btn btn-danger" disabled={this.state.isBuyingNow}>Buy It Now</button>
               </form>
             </div>
           </div>

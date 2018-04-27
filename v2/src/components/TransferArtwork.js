@@ -29,8 +29,8 @@ class TransferArtwork extends Component {
   handleSubmit(event) {
     event.preventDefault();
     this.setState({ isLoading: true });
-    fetch(`http://localhost:3001/images/${this.props.itemImageName}`)
-    .then(res => res.blob()) // Gets the response and returns it as a blob
+    fetch(`${API_ENDPOINT}/images/${this.props.itemImageName}`)
+    .then(res => res.blob())
     .then(blob => {
       this.utils.getBase64(blob, (result) => {
         let transfer = {
