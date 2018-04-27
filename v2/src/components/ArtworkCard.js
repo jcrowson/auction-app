@@ -1,60 +1,29 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 
+import CountdownTimer from './CountdownTimer.js';
+
 import { API_ENDPOINT } from '../services/Constants.js';
 
 class ArtworkCard extends Component {
-
-  constructor(props) {
-    super(props);
-    // let aucStartDateTime = '2018-04-20 16:40:00';
-    let aucStartDateTime = moment();
-    let openTime = moment(aucStartDateTime, 'YYYY-MM-DD HH:mm:ss');
-    let endTime = moment(aucStartDateTime, 'YYYY-MM-DD HH:mm:ss').add(5, 'minutes');
-
-    this.state = {
-      openTime: openTime,
-      endTime: endTime,
-      timeLeft: 0,
-    }
-  }
-
-  countDownAuction() {
-    let duration = moment.duration(this.state.endTime.diff(moment()));
-    this.setState({
-      timeLeft: `${moment(duration._data).format('mm')}:${moment(duration._data).format('ss')}`,
-    });
-  }
-
-  componentDidMount() {
-    if (this.props.isAuction) {
-      this.countDownAuction();
-      this.interval = setInterval(() => this.countDownAuction(), 1000);
-    }
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-
   render() {
-    let {id, itemDetail, itemDescription, itemImageName, itemDate, itemStatus, itemBasePrice, itemSize, itemSubject, itemType, itemMedia, isAuction} = this.props;
+    let {id, itemDetail, itemDescription, itemImageName, itemDate, itemStatus, itemBasePrice, itemSize, itemSubject, itemType, itemMedia, isAuction, buyItNowPrice, reservePrice, closeDate} = this.props;
     return (
       <div className="col-md-4">
         <div className="card artwork-card mb-4 box-shadow">
           <img className="card-img-top" src={`${API_ENDPOINT}/images/${itemImageName}`} alt='Artwork' />
           <div className="card-body">
             <h5 className="card-title">{itemDetail}</h5>
-            <p className="card-text text-muted">{itemDescription.substring(0, 100)}...</p>
-            {isAuction && <p><small>Current bid: </small><strong>$1,000,000</strong></p>}
+            <p className="card-text text-muted">{itemDescription && `${itemDescription.substring(0, 100)}...`}</p>
+            {isAuction && <p><small>Buy It Now: </small><strong>${parseInt(buyItNowPrice).toLocaleString()}</strong></p>}
             <div className="d-flex justify-content-between align-items-center">
               <div className="btn-group">
-                <button onClick={() => this.props.handleClick(id)} type="button" className="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target=".art-detail-modal">{ isAuction ? 'Bid' : 'View' }</button>
+                <button onClick={() => this.props.handleClick(id)} type="button" className={"btn btn-sm btn-outline-" + (isAuction ? 'danger' : 'secondary')} data-toggle="modal" data-target=".art-detail-modal">{ isAuction ? 'Bid' : 'View' }</button>
                 {!isAuction && itemStatus === 'INITIAL' && <button onClick={() => this.props.handleClick(id)} type="button" className="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target=".submit-artwork-auction-modal">Submit for Auction</button>}
                 {!isAuction && itemStatus === 'INITIAL' && <button onClick={() => this.props.handleClick(id)} type="button" className="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target=".transfer-artwork-modal">Transfer</button>}
               </div>
               {itemStatus === 'READYFORAUC' && <span className="badge badge-info">At Auction</span>}
-              {isAuction && <span className="badge badge-pill badge-info">{this.state.timeLeft}</span>}
+              {isAuction && <h1><CountdownTimer endDate={closeDate} /></h1>}
             </div>
           </div>
         </div>

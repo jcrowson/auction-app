@@ -4,14 +4,14 @@ import moment from 'moment';
 
 import Spinner from './Spinner.js';
 
-import ArtworkService from '../services/Artwork.js';
+import AuctionService from '../services/Auctions.js';
 
 class OpenAuction extends Component {
 
   constructor(props) {
     super(props);
 
-    this.artwork = new ArtworkService();
+    this.auctions = new AuctionService();
 
     this.state = {
       isLoading: false,
@@ -34,9 +34,9 @@ class OpenAuction extends Component {
     event.preventDefault();
     this.setState({ isLoading: true });
     let auction = {...this.state.auction};
-    auction.auctionStartDateTime = moment().format('YYYY-MM-DD hh:mm:ss');
+    auction.auctionStartDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
     auction.auctionRequestID = this.props.auctionID;
-    this.artwork.openAuctionForBids(auction).then((response) => {
+    this.auctions.openAuctionForBids(auction).then((response) => {
       this.setState({ isLoading: false });
       this.props.refreshAuctions();
       $('#openAuctionModal').modal('hide');

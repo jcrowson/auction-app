@@ -5,7 +5,7 @@ import OpenAuction from './OpenAuction.js';
 import Spinner from './Spinner.js';
 import CountdownTimer from './CountdownTimer.js';
 
-import ArtworkAPI from '../services/Artwork.js';
+import AuctionService from '../services/Auctions.js';
 import { API_ENDPOINT } from '../services/Constants.js';
 
 class ManageAuctions extends Component {
@@ -21,9 +21,11 @@ class ManageAuctions extends Component {
       isLoadingOpenAuctions: false,
     };
 
-    this.artworkAPI = new ArtworkAPI();
+    this.auctions = new AuctionService();
 
     this.getAuctions = this.getAuctions.bind(this);
+    this.handleCloseAuction = this.handleCloseAuction.bind(this);
+    this.updateAuctionStatus = this.updateAuctionStatus.bind(this);
   }
 
   componentDidMount() {
@@ -37,18 +39,34 @@ class ManageAuctions extends Component {
       isLoadingAuctionRequests: true,
       isLoadingOpenAuctions: true,
     });
-    this.artworkAPI.getAuctionRequestsForCurrentAuctionHouse().then((response => {
+    this.auctions.getAuctionRequestsForCurrentAuctionHouse().then((response => {
       this.setState({
         selectedAuction: response[0],
         auctionRequests: response,
         isLoadingAuctionRequests: false,
       });
     }));
-    this.artworkAPI.getOpenAuctions().then((response => {
+    this.auctions.getOpenAuctions().then((response => {
       this.setState({
         openAuctions: response,
         isLoadingOpenAuctions: false,
       });
+    }));
+  }
+
+  updateAuctionStatus(auctionId) {
+    let indexOfAuctionToUpdate = this.state.openAuctions.findIndex((auction) => auction.auctionID === auctionId);
+    let openAuctions = this.state.openAuctions;
+    let auctionToUpdate = openAuctions[indexOfAuctionToUpdate];
+    auctionToUpdate.status = "CLOSED";
+    openAuctions[indexOfAuctionToUpdate] = auctionToUpdate;
+    this.setState({ openAuctions });
+  }
+
+  handleCloseAuction(auctionId) {
+    let auctionToClose = {auctionID: auctionId};
+    this.auctions.closeAuction(auctionToClose).then((response => {
+      this.updateAuctionStatus(auctionId);
     }));
   }
 
@@ -57,7 +75,7 @@ class ManageAuctions extends Component {
     if (isLoadingOpenAuctions) {
       return <AuctionTableRow />
     }
-    return openAuctions.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp)).map((openAuction, i) => <AuctionTableRow id={i} {...openAuction} key={i} />);
+    return openAuctions.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp)).map((openAuction, i) => <AuctionTableRow id={i} {...openAuction} key={i} handleCloseAuction={this.handleCloseAuction} />);
   }
 
   renderAuctionRequests() {
@@ -65,7 +83,7 @@ class ManageAuctions extends Component {
     if (isLoadingAuctionRequests) {
       return <AuctionTableRow />
     }
-    return auctionRequests.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp)).map((auctionRequest, i) => <AuctionTableRow id={i} handleClick={(auctionId) => {this.setState({ selectedAuction: auctionRequests[auctionId] })}} {...auctionRequest} key={i} />);
+    return auctionRequests.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp)).map((auctionRequest, i) => <AuctionTableRow id={i} handleClick={(auctionId) => {this.setState({ selectedAuction: auctionRequests[auctionId] })}} {...auctionRequest} handleCloseAuction={this.handleCloseAuction} key={i} />);
   }
 
   render() {
@@ -104,11 +122,10 @@ class ManageAuctions extends Component {
       </div>
     );
   }
-
 }
 
 const AuctionTableRow = function(props) {
-  let {id, sellerID, itemImageName, status, buyItNowPrice, reservePrice, requestDate, closeDate} = props;
+  let { id, auctionID, sellerID, itemImageName, status, buyItNowPrice, reservePrice, requestDate, closeDate, handleCloseAuction } = props;
   if (!sellerID) {
     return (
       <tr className="auction">
@@ -128,15 +145,16 @@ const AuctionTableRow = function(props) {
       <td className="artwork"><img src={`${API_ENDPOINT}/images/${itemImageName}`} width="100" height="100" /></td>
       <td>{id + 1}</td>
       <td>{sellerID}</td>
-      <td><span className={"badge badge-" + (status === 'INIT' ? 'info' : 'success')}>{status === 'INIT' ? 'Request' : 'Open'}</span></td>
+      <td><span className={`badge badge-${status}`}>{status}</span></td>
       <td>${parseInt(reservePrice).toLocaleString()}</td>
       <td>${parseInt(buyItNowPrice).toLocaleString()}</td>
       <td>
-        { status !== 'OPEN' && moment(requestDate, 'MMDDYYYY').format('MM-DD-YYYY') }
-        { status === 'OPEN' && <CountdownTimer endDate={closeDate}/> }
+        { status === 'INIT' && moment(requestDate, 'YYYY-MM-DD HH:mm:ss').format('MM-DD-YYYY') }
+        { status === 'OPEN' && <CountdownTimer auctionId={props.auctionID} endDate={closeDate} handleCloseAuction={props.handleCloseAuction} /> }
+        { status === 'CLOSED' && '-' }
       </td>
       <td>
-        { status !== 'OPEN' && <button type="button" className="btn btn-primary btn-sm" onClick={() => props.handleClick(id)} data-toggle="modal" data-target=".open-auction-modal">Open Auction</button> }
+        { status === 'INIT' && <button type="button" className="btn btn-primary btn-sm" onClick={() => props.handleClick(id)} data-toggle="modal" data-target=".open-auction-modal">Open Auction</button> }
       </td>
     </tr>
   );

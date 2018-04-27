@@ -5,20 +5,18 @@ import moment from 'moment';
 
 import Spinner from './Spinner.js';
 
-import ArtworkService from '../services/Artwork.js';
+import AuctionService from '../services/Auctions.js';
 
 class SubmitArtworkAuction extends Component {
 
   constructor(props) {
     super(props);
 
-    this.artwork = new ArtworkService();
+    this.auctions = new AuctionService();
 
     this.state = {
       auction: {
-        requestDate: moment().format('MMDDYYYY'),
-        openDate: moment().format('YYYY-MM-DD hh:mm:ss'),
-        closeDate: moment().format('YYYY-MM-DD hh:mm:ss'),
+        requestDate: moment().format('YYYY-MM-DD HH:mm:ss'),
         auctionHouseID: "sotheby",
       },
       isLoading: false,
@@ -43,7 +41,7 @@ class SubmitArtworkAuction extends Component {
     auctionRequest.itemID = this.props.itemID;
     auctionRequest.aesKey = this.props.aesKey;
     this.setState({ isLoading: true });
-    this.artwork.createAuctionRequest(auctionRequest).then((response) => {
+    this.auctions.createAuctionRequest(auctionRequest).then((response) => {
       this.setState({ isLoading: false });
       $('#submitArtworkModal').modal('hide');
       this.props.updateArtwork();

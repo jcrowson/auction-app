@@ -46,6 +46,10 @@ footer p {
   border: none;
 }
 
+.artwork-card h1 {
+  font-size: 1.3rem;
+}
+
 .card-img-top {
   min-height: 300px;
   max-height: 300px;
@@ -86,6 +90,10 @@ td.artwork {
 td.artwork img {
   object-fit: cover;
 }
+
+.badge-INIT { background-color: #17a2b8; color: white; }
+.badge-OPEN { background-color: #28a745; color: white; }
+.badge-CLOSED { background-color: #dc3545; color: white; }
 
 .spinner-wrapper {
   min-height: 300px;

@@ -9,35 +9,43 @@ import SubmitArtworkAuction from './SubmitArtworkAuction.js';
 import TransferArtwork from './TransferArtwork.js';
 import Spinner from './Spinner.js';
 
-import ArtworkAPI from '../services/Artwork.js';
+import ArtworkService from '../services/Artwork.js';
+import AuctionService from '../services/Auctions.js';
 
 class ArtworkGrid extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      yourArtwork: [],
+      openAuctions: [],
       selectedArtwork: {},
       isBidding: false,
       isLoadingYourArtwork: true,
       isLoadingOpenAuctions: true,
       isShowingAllOpenAuctions: false,
-      yourArtwork: [],
-      openAuctions: [],
+      isViewingArtwork: false,
     };
 
-    this.artworkAPI = new ArtworkAPI();
+    this.artwork = new ArtworkService();
+    this.auctions = new AuctionService();
 
     this.addArtworkToState = this.addArtworkToState.bind(this);
     this.updateArtworkStatus = this.updateArtworkStatus.bind(this);
   }
 
   componentDidMount() {
-    this.artworkAPI.getArtworkForCurrentUser().then(response => {
+    this.artwork.getArtworkForCurrentUser().then(response => {
       this.setState({
         yourArtwork: response,
         selectedArtwork: response[0],
-        isLoadingOpenAuctions: false,
         isLoadingYourArtwork: false,
+      });
+    });
+    this.auctions.getOpenAuctions().then(response => {
+      this.setState({
+        openAuctions: response,
+        isLoadingOpenAuctions: false,
       });
     });
   }
@@ -64,7 +72,7 @@ class ArtworkGrid extends Component {
     }
     return (
       <div className="row">
-        { yourArtwork.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp)).map((art, i) => <ArtworkCard handleClick={(artworkIndex) => this.setState({ selectedArtwork: yourArtwork[artworkIndex], isBidding: false })} id={i} {...art} key={i} />) }
+        { yourArtwork.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp)).map((art, i) => <ArtworkCard handleClick={(artworkIndex) => this.setState({ selectedArtwork: yourArtwork[artworkIndex], isBidding: false, isViewingArtwork: true })} id={i} {...art} key={i} />) }
       </div>
     );
   }
@@ -77,7 +85,7 @@ class ArtworkGrid extends Component {
     return (
       <div className="row">
         { openAuctions.length === 0 && <img className="mb-4 mx-auto" src={emptyAuctions} alt="Empty Auction" /> }
-        { openAuctions.length > 0 && openAuctions.slice(0, isShowingAllOpenAuctions ? openAuctions.count : 3).map((auction, i) => <ArtworkCard isAuction handleClick={(artworkIndex) => this.setState({ selectedArtwork: openAuctions[artworkIndex], isBidding: true })} id={i} {...auction} key={i} />) }
+        { openAuctions.length > 0 && openAuctions.slice(0, isShowingAllOpenAuctions ? openAuctions.count : 3).map((auction, i) => <ArtworkCard isAuction handleClick={(artworkIndex) => this.setState({ selectedArtwork: openAuctions[artworkIndex], isBidding: true, isViewingArtwork: true })} id={i} {...auction} key={i} />) }
       </div>
     );
   }
@@ -107,7 +115,7 @@ class ArtworkGrid extends Component {
               </div>
             </div>
             { this.renderYourArtwork() }
-            <ArtworkDetail isAuction={isBidding} {...selectedArtwork} />
+            <ArtworkDetail isVisible={this.state.isViewingArtwork} isAuction={isBidding} {...selectedArtwork} />
             <NewArtwork addArtwork={this.addArtworkToState} />
             <SubmitArtworkAuction updateArtwork={this.updateArtworkStatus} {...selectedArtwork} />
             <TransferArtwork {...selectedArtwork} />
