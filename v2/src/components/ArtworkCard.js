@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import logo from '../assets/logo.svg';
 
 import CountdownTimer from './CountdownTimer.js';
 
@@ -19,6 +20,7 @@ class ArtworkCard extends Component {
       <div className="col-md-4">
         <div className={"card artwork-card mb-4 " + (isAuctionClosed ? 'artwork-card-disabled' : '')}>
           <img className="card-img-top" src={`${API_ENDPOINT}/images/${itemImageName}`} alt='Artwork' />
+          <div className="watermark"></div>
           <div className="card-body">
             <h5 className="card-title">{itemDetail}</h5>
             <p className="card-text text-muted">{itemDescription && `${itemDescription.substring(0, 100)}...`}</p>

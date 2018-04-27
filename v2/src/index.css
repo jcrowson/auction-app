@@ -59,6 +59,15 @@ footer p {
   object-fit: cover;
 }
 
+.watermark {
+  position: absolute;
+  opacity: .3;
+  width: 100%;
+  height: 300px;
+  background: url('./assets/logo.svg') repeat;
+  background-position: center;
+}
+
 .artwork-card:hover {
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
   transform: translate(0, -5px);

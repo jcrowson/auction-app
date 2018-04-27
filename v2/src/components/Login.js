@@ -69,7 +69,7 @@ class Login extends Component {
       return (
         <div className="login-form text-center">
           <form className="form-signin" onSubmit={this.handleSubmit}>
-            <img className="mb-4" src={logo} alt="" width="200" height="72" />
+            <img className="mb-4" src={logo} alt="Auction Chain" width="200" height="72" />
             { this.renderContent() }
             <p className="mt-5 mb-3 text-muted">&copy; Chainyard.com 2018</p>
           </form>
