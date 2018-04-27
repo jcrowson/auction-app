@@ -67,6 +67,8 @@ footer p {
   background: url('./assets/logo.svg') repeat;
   background-position: center;
 }
+.watermark-thumb { width: 100%; }
+.watermark-full { width: 90%; height: 100%; }
 
 .artwork-card:hover {
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);

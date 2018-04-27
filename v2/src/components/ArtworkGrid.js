@@ -115,7 +115,7 @@ class ArtworkGrid extends Component {
               </div>
             </div>
             { this.renderYourArtwork() }
-            <ArtworkDetail isVisible={this.state.isViewingArtwork} isAuction={isBidding} {...selectedArtwork} />
+            <ArtworkDetail isVisible={this.state.isViewingArtwork} isAuction={isBidding} itemId={selectedArtwork.itemID} auctionId={selectedArtwork.auctionID} buyItNowPrice={selectedArtwork.buyItNowPrice} />
             <NewArtwork addArtwork={this.addArtworkToState} />
             <SubmitArtworkAuction updateArtwork={this.updateArtworkStatus} {...selectedArtwork} />
             <TransferArtwork {...selectedArtwork} />

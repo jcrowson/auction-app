@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import $ from 'jquery';
 
 import CountdownTimer from './CountdownTimer.js';
 
@@ -13,6 +14,7 @@ class BiddingArea extends Component {
       highestBid: '',
       bidPrice: '',
       message: '',
+      interval: '',
     };
     this.auctionAPI = new AuctionsAPI;
     this.handleMakeBid = this.handleMakeBid.bind(this);
@@ -21,16 +23,12 @@ class BiddingArea extends Component {
 
   componentDidMount() {
     this.getHighestBid();
-    this.interval = setInterval(() => this.getHighestBid(), 3000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
+    let interval = setInterval(() => this.getHighestBid(), 1000);
+    this.setState({ interval });
   }
 
   getHighestBid() {
     this.auctionAPI.getHighestBidForAuctionWithId(this.props.auctionId).then(response => {
-      console.log('highest bid: ', response);
       this.setState({
         highestBid: response.bidPrice,
       });

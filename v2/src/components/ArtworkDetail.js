@@ -22,7 +22,7 @@ class ArtworkDetail extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.isVisible) {
       this.setState({ isLoading: true });
-      this.artworkAPI.getArtworkWithId(nextProps.itemID).then(response => {
+      this.artworkAPI.getArtworkWithId(nextProps.itemId).then(response => {
         this.setState({
           artwork: response,
           isLoading: false,
@@ -32,8 +32,8 @@ class ArtworkDetail extends Component {
   }
 
   renderContent() {
-    let { isAuction, auctionID, buyItNowPrice } = this.props;
-    let { itemDetail, itemDescription, itemImageName, itemDate, itemBasePrice, itemSize, itemSubject, itemType, itemMedia } = this.state.artwork;
+    let { isAuction, auctionId, buyItNowPrice } = this.props;
+    let { aesKey, itemDetail, itemDescription, itemImageName, itemDate, itemBasePrice, itemSize, itemSubject, itemType, itemMedia, itemImage } = this.state.artwork;
     if (this.state.isLoading) {
       return <Spinner />;
     }
@@ -41,6 +41,7 @@ class ArtworkDetail extends Component {
       <div className="container-fluid">
         <div className="row">
           <div className="col-md-12">
+            { !aesKey && <div className="watermark watermark-full"></div> }
             <img className="img-stretch artwork-detail" src={`${API_ENDPOINT}/images/${itemImageName}`} alt='Artwork' />
           </div>
           <div className="col-md-12 mt-4">
@@ -60,7 +61,7 @@ class ArtworkDetail extends Component {
             <hr />
             <p className="mt-2">{itemDescription}</p>
           </div>
-          { isAuction && <BiddingArea auctionId={auctionID} buyItNowPrice={buyItNowPrice} /> }
+          { isAuction && <BiddingArea auctionId={auctionId} buyItNowPrice={buyItNowPrice} /> }
         </div>
       </div>
     );
