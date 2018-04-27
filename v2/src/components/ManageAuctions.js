@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import moment from 'moment';
 
+import AuctionTableRow from './AuctionTableRow.js';
 import OpenAuction from './OpenAuction.js';
-import Spinner from './Spinner.js';
-import CountdownTimer from './CountdownTimer.js';
 
 import AuctionService from '../services/Auctions.js';
-import { API_ENDPOINT } from '../services/Constants.js';
 
 class ManageAuctions extends Component {
 
@@ -123,41 +120,5 @@ class ManageAuctions extends Component {
     );
   }
 }
-
-const AuctionTableRow = function(props) {
-  let { id, auctionID, sellerID, itemImageName, status, buyItNowPrice, reservePrice, requestDate, closeDate, handleCloseAuction } = props;
-  if (!sellerID) {
-    return (
-      <tr className="auction">
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td><Spinner /></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-    );
-  }
-  return (
-    <tr className="auction">
-      <td className="artwork"><img src={`${API_ENDPOINT}/images/${itemImageName}`} width="100" height="100" /></td>
-      <td>{id + 1}</td>
-      <td>{sellerID}</td>
-      <td><span className={`badge badge-${status}`}>{status}</span></td>
-      <td>${parseInt(reservePrice).toLocaleString()}</td>
-      <td>${parseInt(buyItNowPrice).toLocaleString()}</td>
-      <td>
-        { status === 'INIT' && moment(requestDate, 'YYYY-MM-DD HH:mm:ss').format('MM-DD-YYYY') }
-        { status === 'OPEN' && <CountdownTimer auctionId={props.auctionID} endDate={closeDate} handleCloseAuction={props.handleCloseAuction} /> }
-        { status === 'CLOSED' && '-' }
-      </td>
-      <td>
-        { status === 'INIT' && <button type="button" className="btn btn-primary btn-sm" onClick={() => props.handleClick(id)} data-toggle="modal" data-target=".open-auction-modal">Open Auction</button> }
-      </td>
-    </tr>
-  );
-};
 
 export default ManageAuctions;
