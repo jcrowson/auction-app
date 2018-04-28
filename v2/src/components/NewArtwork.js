@@ -98,7 +98,7 @@ class NewArtwork extends Component {
 
         <div className="row">
           <div className="col-md-6 mb-3">
-            <label htmlFor="firstName">Creation Date</label>
+            <label htmlFor="firstName">Creation Date (MM/DD/YY)</label>
             <input type="text" className="form-control" id="creationDate" name="itemDate" onChange={this.handleChange} required />
           </div>
           <div className="col-md-6 mb-3">

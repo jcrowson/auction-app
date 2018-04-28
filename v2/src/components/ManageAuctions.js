@@ -116,7 +116,7 @@ class ManageAuctions extends Component {
                 <thead>
                   <tr>
                     <th scope="col">Artwork</th>
-                    <th scope="col">#</th>
+                    <th scope="col">Auction ID</th>
                     <th scope="col">Seller ID</th>
                     <th scope="col">Status</th>
                     <th scope="col">Reserve Price</th>

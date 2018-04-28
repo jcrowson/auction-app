@@ -18,6 +18,7 @@
 
 import React, { Component } from 'react';
 import moment from 'moment';
+import $ from 'jquery';
 
 import Spinner from './Spinner.js';
 import CountdownTimer from './CountdownTimer.js';
@@ -43,6 +44,9 @@ class AuctionTableRow extends Component {
       let interval = setInterval(() => this.getHighestBidForAuction(), 1000);
       this.setState({ interval });
     }
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
   }
 
   componentWillReceiveProps(nextProps) {
@@ -89,7 +93,9 @@ class AuctionTableRow extends Component {
     return (
       <tr className="auction">
         <td className="artwork"><img src={`${API_ENDPOINT}/images/${itemImageName}`} width="100" height="100" alt="Artwork"/></td>
-        <td>{id + 1}</td>
+        <td>
+          <button type="button" className="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title={auctionID}>Show ID</button>
+        </td>
         <td>{sellerID}</td>
         <td><span className={`badge badge-${status}`}>{status}</span></td>
         <td>${parseInt(reservePrice, 10).toLocaleString()}</td>
