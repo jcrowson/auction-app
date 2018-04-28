@@ -1,3 +1,21 @@
+/**
+ * Copyright 2018 IT People Corporation. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the 'License');
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an 'AS IS' BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ * Author: James Crowson <james.crowson@itpeoplecorp.com>
+ */
+
 import React, { Component } from 'react';
 import $ from 'jquery';
 
@@ -5,20 +23,18 @@ import moment from 'moment';
 
 import Spinner from './Spinner.js';
 
-import ArtworkService from '../services/Artwork.js';
+import AuctionService from '../services/Auctions.js';
 
 class SubmitArtworkAuction extends Component {
 
   constructor(props) {
     super(props);
 
-    this.artwork = new ArtworkService();
+    this.auctions = new AuctionService();
 
     this.state = {
       auction: {
-        requestDate: moment().format('MMDDYYYY'),
-        openDate: moment().format('YYYY-MM-DD hh:mm:ss'),
-        closeDate: moment().format('YYYY-MM-DD hh:mm:ss'),
+        requestDate: moment().format('YYYY-MM-DD HH:mm:ss'),
         auctionHouseID: "sotheby",
       },
       isLoading: false,
@@ -43,9 +59,10 @@ class SubmitArtworkAuction extends Component {
     auctionRequest.itemID = this.props.itemID;
     auctionRequest.aesKey = this.props.aesKey;
     this.setState({ isLoading: true });
-    this.artwork.createAuctionRequest(auctionRequest).then((response) => {
+    this.auctions.createAuctionRequest(auctionRequest).then((response) => {
       this.setState({ isLoading: false });
       $('#submitArtworkModal').modal('hide');
+      this.props.updateArtwork();
     });
   }
 
@@ -56,7 +73,7 @@ class SubmitArtworkAuction extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <div className="alert alert-primary" role="alert">
-          You are submitting to Sotheby's, London Auction House.
+          You are submitting to the Sotheby's London Auction House.
         </div>
         <div className="mb-3">
           <label htmlFor="buytItNowPrice">Buy-It-Now Price</label>
@@ -88,7 +105,7 @@ class SubmitArtworkAuction extends Component {
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title">Submit {itemDetail} for Auction</h5>
+              <h5 className="modal-title">Submit &quot;{itemDetail}&quot; for Auction</h5>
               <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>

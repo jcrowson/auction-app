@@ -18,46 +18,57 @@
 
 import React, { Component } from 'react';
 import $ from 'jquery';
-import moment from 'moment';
 
 import Spinner from './Spinner.js';
 
-import AuctionService from '../services/Auctions.js';
+import ArtworkService from '../services/Artwork.js';
+import UtilsService from '../services/Utils.js';
 
-class OpenAuction extends Component {
-
+class TransferArtwork extends Component {
   constructor(props) {
     super(props);
-
-    this.auctions = new AuctionService();
-
     this.state = {
+      artwork: {},
+      transfereeUsername: '',
       isLoading: false,
     };
-
+    this.artwork = new ArtworkService();
+    this.utils = new UtilsService();
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.itemID) {
+      this.setState({ isLoading: true });
+      this.artwork.getArtworkWithId(nextProps.itemID).then(response => {
+        this.setState({
+          artwork: response,
+          isLoading: false,
+        });
+      });
+    }
   }
 
   handleChange(event) {
     const target = event.target;
     const value = target.value;
-    const name = target.name;
-    let auction = {...this.state.auction}
-    auction[name] = value;
-    this.setState({ auction });
+    this.setState({ transfereeUsername: value });
   }
 
   handleSubmit(event) {
     event.preventDefault();
     this.setState({ isLoading: true });
-    let auction = {...this.state.auction};
-    auction.auctionStartDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
-    auction.auctionRequestID = this.props.auctionID;
-    this.auctions.openAuctionForBids(auction).then((response) => {
+    let transfer = {
+      itemID: this.props.itemID,
+      ownerAESKey: this.props.aesKey,
+      transferee: this.state.transfereeUsername,
+      itemImage: this.state.artwork.itemImage,
+    };
+    this.artwork.transferArtworkToUser(transfer).then((response) => {
       this.setState({ isLoading: false });
-      this.props.refreshAuctions();
-      $('#openAuctionModal').modal('hide');
+      this.props.handleTransfer();
+      $('#transferArtworkModal').modal('hide');
     });
   }
 
@@ -66,28 +77,27 @@ class OpenAuction extends Component {
       return <Spinner />;
     }
     return (
-      <div className="row">
-        <div className="col-md-12">
-          <form onSubmit={this.handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="duration">Duration (Minutes)</label>
-              <input type="number" className="form-control" name="duration" onChange={this.handleChange} required />
-              <small className="form-text text-muted">Enter the auction duration in minutes.</small>
-            </div>
-            <button type="submit" className="btn btn-primary btn-block">Begin Auction</button>
-          </form>
+      <form onSubmit={this.handleSubmit}>
+        <div className="alert alert-primary" role="alert">
+          Transfer this artwork to another user without payment.
         </div>
-      </div>
+        <div className="mb-3">
+          <label htmlFor="reservePrice">Transferee Username</label>
+          <input className="form-control" type="text" name="transfereeUsername" value={this.state.transfereeUsername} onChange={this.handleChange} required />
+        </div>
+        <button type="submit" className="btn btn-primary mt-2">Transfer Artwork</button>
+      </form>
     );
   }
 
   render() {
+    let { itemDetail } = this.props;
     return (
-      <div id="openAuctionModal" className="modal fade open-auction-modal" tabIndex="-1" role="dialog" aria-labelledby="openAuction" aria-hidden="true">
-        <div className="modal-dialog modal-sm">
+      <div id="transferArtworkModal" className="modal fade transfer-artwork-modal" tabIndex="-1" role="dialog" aria-labelledby="transferArtwork" aria-hidden="true">
+        <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLongTitle">Open Auction</h5>
+              <h5 className="modal-title">Transfer &quot;{itemDetail}&quot;</h5>
               <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -104,4 +114,4 @@ class OpenAuction extends Component {
   }
 }
 
-export default OpenAuction;
+export default TransferArtwork;

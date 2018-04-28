@@ -1,10 +1,27 @@
+/**
+ * Copyright 2018 IT People Corporation. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the 'License');
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an 'AS IS' BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ * Author: James Crowson <james.crowson@itpeoplecorp.com>
+ */
+
 import React, { Component } from 'react';
-import moment from 'moment';
 
+import AuctionTableRow from './AuctionTableRow.js';
 import OpenAuction from './OpenAuction.js';
-import Spinner from './Spinner.js';
 
-import ArtworkAPI from '../services/Artwork.js';
+import AuctionService from '../services/Auctions.js';
 
 class ManageAuctions extends Component {
 
@@ -13,44 +30,75 @@ class ManageAuctions extends Component {
 
     this.state = {
       auctionRequests: [],
-      isLoading: true,
+      openAuctions: [],
+      selectedAuction: {},
+      isLoadingAuctionRequests: false,
+      isLoadingOpenAuctions: false,
     };
 
-    this.artworkAPI = new ArtworkAPI();
+    this.auctions = new AuctionService();
+
+    this.getAuctions = this.getAuctions.bind(this);
+    this.handleCloseAuction = this.handleCloseAuction.bind(this);
+    this.updateAuctionStatus = this.updateAuctionStatus.bind(this);
   }
 
   componentDidMount() {
-    this.artworkAPI.getAuctionRequestsForCurrentAuctionHouse().then((response => {
+    this.getAuctions();
+  }
+
+  getAuctions() {
+    this.setState({
+      auctionRequests: [],
+      openAuctions: [],
+      isLoadingAuctionRequests: true,
+      isLoadingOpenAuctions: true,
+    });
+    this.auctions.getAuctionRequestsForCurrentAuctionHouse().then((response => {
       this.setState({
+        selectedAuction: response[0],
         auctionRequests: response,
-        isLoading: false,
+        isLoadingAuctionRequests: false,
+      });
+    }));
+    this.auctions.getOpenAuctions().then((response => {
+      this.setState({
+        openAuctions: response,
+        isLoadingOpenAuctions: false,
       });
     }));
   }
 
-  renderContent() {
-    let {isLoading, auctionRequests} = this.state;
-    if (isLoading) {
-      return <Spinner />;
+  updateAuctionStatus(auctionId) {
+    let indexOfAuctionToUpdate = this.state.openAuctions.findIndex((auction) => auction.auctionID === auctionId);
+    let openAuctions = this.state.openAuctions;
+    let auctionToUpdate = openAuctions[indexOfAuctionToUpdate];
+    auctionToUpdate.status = "CLOSED";
+    openAuctions[indexOfAuctionToUpdate] = auctionToUpdate;
+    this.setState({ openAuctions });
+  }
+
+  handleCloseAuction(auctionId) {
+    let auctionToClose = {auctionID: auctionId};
+    this.auctions.closeAuction(auctionToClose).then((response => {
+      this.updateAuctionStatus(auctionId);
+    }));
+  }
+
+  renderOpenAuctions() {
+    let {isLoadingOpenAuctions, openAuctions} = this.state;
+    if (isLoadingOpenAuctions) {
+      return <AuctionTableRow />
     }
-    return (
-      <table className="table">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Seller ID</th>
-            <th scope="col">Status</th>
-            <th scope="col">Reserve Price</th>
-            <th scope="col">Buy-It-Now Price</th>
-            <th scope="col">Request Date</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-          { auctionRequests.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp)).map((auctionRequest, i) => <AuctionTableRow id={i} {...auctionRequest} key={i} />) }
-        </tbody>
-      </table>
-    );
+    return openAuctions.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp)).map((openAuction, i) => <AuctionTableRow id={i} {...openAuction} key={i} handleCloseAuction={this.handleCloseAuction} />);
+  }
+
+  renderAuctionRequests() {
+    let {isLoadingAuctionRequests, auctionRequests} = this.state;
+    if (isLoadingAuctionRequests) {
+      return <AuctionTableRow />
+    }
+    return auctionRequests.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp)).map((auctionRequest, i) => <AuctionTableRow id={i} handleClick={(auctionId) => {this.setState({ selectedAuction: auctionRequests[auctionId] })}} {...auctionRequest} handleCloseAuction={this.handleCloseAuction} key={i} />);
   }
 
   render() {
@@ -64,32 +112,31 @@ class ManageAuctions extends Component {
                   <h1>Sotheby's, London</h1>
                 </div>
               </div>
-              { this.renderContent() }
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Artwork</th>
+                    <th scope="col">Auction ID</th>
+                    <th scope="col">Seller ID</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Reserve Price</th>
+                    <th scope="col">Buy-It-Now Price</th>
+                    <th scope="col">Request Date / Timeleft</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  { this.renderOpenAuctions() }
+                  { this.renderAuctionRequests() }
+                </tbody>
+              </table>
             </div>
           </div>
         </main>
-        <OpenAuction />
+        <OpenAuction {...this.state.selectedAuction} refreshAuctions={this.getAuctions} />
       </div>
     );
   }
-
 }
-
-const AuctionTableRow = function(props) {
-  let {id, sellerID, status, buyItNowPrice, reservePrice, requestDate} = props;
-  return (
-    <tr>
-      <th scope="row">{id + 1}</th>
-      <td>{sellerID}</td>
-      <td><span className={"badge badge-" + (status === 'INIT' ? 'info' : 'success')}>{status}</span></td>
-      <td>${parseInt(reservePrice).toLocaleString()}</td>
-      <td>${parseInt(buyItNowPrice).toLocaleString()}</td>
-      <td>{moment(requestDate, 'MMDDYYYY').format('MM-DD-YYYY')}</td>
-      <td>
-        { status !== 'OPEN' && <button type="button" className="btn btn-primary btn-sm" data-toggle="modal" data-target=".open-auction-modal">Open Auction</button> }
-      </td>
-    </tr>
-  );
-};
 
 export default ManageAuctions;
